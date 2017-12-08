@@ -1,0 +1,78 @@
+package model;
+
+import javafx.beans.property.*;
+
+public class User {
+	private IntegerProperty userId;
+	private StringProperty username;
+	private StringProperty password;
+	private StringProperty firstName;
+	private StringProperty lastName;
+	private IntegerProperty departmentId;
+
+	// Constructor
+	public User() {
+		this.userId = new SimpleIntegerProperty();
+		this.username = new SimpleStringProperty();
+		this.password = new SimpleStringProperty();
+		this.firstName = new SimpleStringProperty();
+		this.lastName = new SimpleStringProperty();
+		this.departmentId = new SimpleIntegerProperty();
+	}
+
+	public int getUserId() {
+		 return userId.get();
+	}
+
+	public void setUserId(int userId) {
+		this.userId.set(userId);
+	}
+    public IntegerProperty userIdProperty(){
+        return userId;
+    }
+
+	public StringProperty getUsername() {
+		return username;
+	}
+
+
+    //first_name
+    public String getFirstName () {
+        return firstName.get();
+    }
+
+    public void setFirstName(String firstName){
+        this.firstName.set(firstName);
+    }
+
+    public StringProperty firstNameProperty() {
+        return firstName;
+    }
+
+    //last_name
+    public String getLastName () {
+        return lastName.get();
+    }
+
+    public void setLastName(String lastName){
+        this.lastName.set(lastName);
+    }
+
+    public StringProperty lastNameProperty() {
+        return lastName;
+    }
+
+    //department_id
+    public int getDepartmanId() {
+        return departmentId.get();
+    }
+
+    public void setDepartmantId(int departmentId){
+        this.departmentId.set(departmentId);
+    }
+
+    public IntegerProperty departmentIdProperty(){
+        return departmentId;
+    }
+
+}

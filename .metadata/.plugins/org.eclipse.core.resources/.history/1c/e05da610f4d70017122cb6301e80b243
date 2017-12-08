@@ -1,0 +1,21 @@
+package model;
+
+public class User {
+	private IntegerProperty userId;
+	private String username;
+	private String password;
+	private String userFirstName;
+	private String userLastName;
+	private int userDepartment;
+	
+    //Constructor
+    public User() {
+        this.username = new String();
+        this.password = new String();
+    }
+
+	// ...constructors, getters, and setters
+
+
+
+}

@@ -1,0 +1,9 @@
+package application;
+
+public class Ticket {
+	
+	private int ticketId;
+	private int ticketName;
+	private int ticketDescription;
+
+}

@@ -1,0 +1,47 @@
+package application;
+
+import application.LoginManager;
+import application.model.User;
+
+import java.io.IOException;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
+
+/** Main application class for the login demo application */
+public class Login extends Application {
+	private Scene scene;
+	private BorderPane rootLayout;
+
+	public static void main(String[] args) {
+		launch(args);
+	}
+
+	@Override
+	public void start(Stage stage) throws IOException {
+		scene = new Scene(new StackPane());
+
+		LoginManager loginManager = new LoginManager(scene, stage);
+		loginManager.showLoginScreen();
+
+		stage.setScene(scene);
+		stage.show();
+	}
+
+	/**
+	 * Callback method invoked to notify that a user has been authenticated. Will
+	 * show the main application screen.
+	 */
+	public void authenticate(User user, String sessionID) {
+		showMainView(user, sessionID);
+	}
+	
+	/**
+	 * Callback method invoked to notify that a user has logged out of the main
+	 * application. Will show the login application screen.
+	 */
+	public void logout() {
+		showLoginScreen();
+	}
+}

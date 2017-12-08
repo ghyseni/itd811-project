@@ -1,0 +1,23 @@
+package model;
+
+import javafx.beans.property.*;
+
+public class User {
+	private IntegerProperty userId;
+	private StringProperty username;
+	private StringProperty password;
+	private StringProperty userFirstName;
+	private StringProperty userLastName;
+	private IntegerProperty userDepartment;
+	
+    //Constructor
+    public User() {
+        this.username = new SimpleStringProperty();
+        this.password = new SimpleStringProperty();
+    }
+
+	// ...constructors, getters, and setters
+
+
+
+}

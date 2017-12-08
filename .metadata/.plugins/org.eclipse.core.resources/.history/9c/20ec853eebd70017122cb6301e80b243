@@ -1,0 +1,154 @@
+package application;
+
+import java.sql.SQLException;
+
+import javax.sql.*;
+import javax.sql.rowset.JdbcRowSet;
+
+//Controller
+public class UserBean {
+	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	static final String DB_URL = "jdbc:mysql://localhost:3306/mydatabase";
+	static final String DB_USER = "user1";
+	static final String DB_PASS = "secret";
+
+	private JdbcRowSet rowSet = null;
+
+	public UserBean() {
+	      try {
+	         Class.forName(JDBC_DRIVER);
+	         rowSet = new JdbcRowSetImpl();
+	         rowSet.setUrl(DB_URL);
+	         rowSet.setUsername(DB_USER);
+	         rowSet.setPassword(DB_PASS);
+	         rowSet.setCommand("SELECT * FROM User");
+	         rowSet.execute();
+
+	      catch (SQLException | ClassNotFoundException ex) {
+	         ex.printStackTrace();
+	      }
+	   }
+
+	public User create(User p) {
+		try {
+			rowSet.moveToInsertRow();
+			rowSet.updateInt("UserId", p.getUserId());
+			rowSet.updateString("firstName", p.getFirstName());
+			rowSet.updateString("middleName", p.getMiddleName());
+			rowSet.updateString("lastName", p.getLastName());
+			rowSet.updateString("email", p.getEmail());
+			rowSet.updateString("phone", p.getPhone());
+			rowSet.insertRow();
+			rowSet.moveToCurrentRow();
+		} catch (SQLException ex) {
+			try {
+				rowSet.rollback();
+				p = null;
+			} catch (SQLException e) {
+
+			}
+			ex.printStackTrace();
+		}
+		return p;
+	}
+
+	public User update(User p) {
+		try {
+			rowSet.updateString("firstName", p.getFirstName());
+			rowSet.updateString("middleName", p.getMiddleName());
+			rowSet.updateString("lastName", p.getLastName());
+			rowSet.updateString("email", p.getEmail());
+			rowSet.updateString("phone", p.getPhone());
+			rowSet.updateRow();
+			rowSet.moveToCurrentRow();
+		} catch (SQLException ex) {
+			try {
+				rowSet.rollback();
+			} catch (SQLException e) {
+
+			}
+			ex.printStackTrace();
+		}
+		return p;
+	}
+
+	public void delete() {
+		try {
+			rowSet.moveToCurrentRow();
+			rowSet.deleteRow();
+		} catch (SQLException ex) {
+			try {
+				rowSet.rollback();
+			} catch (SQLException e) {
+			}
+			ex.printStackTrace();
+		}
+
+	}
+
+	public User moveFirst() {
+		User p = new User();
+		try {
+			rowSet.first();
+			p.setUserId(rowSet.getInt("UserId"));
+			p.setUserName(rowSet.getString("userName"));
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return p;
+	}
+
+	public User moveLast() {
+		User p = new User();
+		try {
+			rowSet.last();
+			p.setUserId(rowSet.getInt("UserId"));
+			p.setUserName(rowSet.getString("userName"));
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return p;
+	}
+
+	public User moveNext() {
+		User p = new User();
+		try {
+			if (rowSet.next() == false)
+				rowSet.previous();
+			p.setUserId(rowSet.getInt("UserId"));
+			p.setUserName(rowSet.getString("userName"));
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return p;
+	}
+
+	public User movePrevious() {
+		User p = new User();
+		try {
+			if (rowSet.previous() == false)
+				rowSet.next();
+			p.setUserId(rowSet.getInt("UserId"));
+			p.setUserName(rowSet.getString("userName"));
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return p;
+	}
+
+	public User getCurrent() {
+		User p = new User();
+		try {
+			rowSet.moveToCurrentRow();
+			p.setUserId(rowSet.getInt("UserId"));
+			p.setUserName(rowSet.getString("userName"));
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return p;
+	}
+}

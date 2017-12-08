@@ -1,0 +1,44 @@
+package application.controller;
+
+import application.LoginManager;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+
+public class RootLayoutController {
+
+	@FXML
+	private Button logoutButton;
+	@FXML
+	private Label sessionLabel;
+
+	public void initialize() {
+	}
+
+	// Exit the program
+	public void handleExit(ActionEvent actionEvent) {
+		System.exit(0);
+	}
+
+	// Help Menu button behavior
+	public void handleHelp(ActionEvent actionEvent) {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("Program Information");
+		alert.setHeaderText("This is a sample JAVAFX application for SWTESTACADEMY!");
+		alert.setContentText("You can search, delete, update, insert a new employee with this program.");
+		alert.show();
+	}
+
+	public void initSessionID(final LoginManager loginManager, String sessionID) {
+		System.out.println("sessionID:"+sessionID);
+		logoutButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				loginManager.logout();
+			}
+		});
+	}
+}

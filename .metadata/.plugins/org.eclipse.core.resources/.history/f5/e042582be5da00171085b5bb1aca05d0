@@ -1,0 +1,105 @@
+package application.model;
+
+import javafx.beans.property.*;
+
+public class Ticket {
+	private IntegerProperty ticketId;
+	private StringProperty ticketname;
+	private StringProperty password;
+	private StringProperty firstName;
+	private StringProperty lastName;
+	private IntegerProperty departmentId;
+
+	// Constructor
+	public Ticket() {
+		this.ticketId = new SimpleIntegerProperty();
+		this.ticketname = new SimpleStringProperty();
+		this.password = new SimpleStringProperty();
+		this.firstName = new SimpleStringProperty();
+		this.lastName = new SimpleStringProperty();
+		this.departmentId = new SimpleIntegerProperty();
+	}
+
+	// ticketId
+	public int getTicketId() {
+		return ticketId.get();
+	}
+
+	public void setTicketId(int ticketId) {
+		this.ticketId.set(ticketId);
+	}
+
+	public IntegerProperty ticketIdProperty() {
+		return ticketId;
+	}
+
+	public StringProperty getTicketname() {
+		return ticketname;
+	}
+
+	// ticketname
+	public String getTicketame() {
+		return firstName.get();
+	}
+
+	public void setName(String ticketname) {
+		this.name.set(ticketname);
+	}
+
+	public StringProperty ticketnameProperty() {
+		return firstName;
+	}
+
+	// password
+	public String getPassword() {
+		return password.get();
+	}
+
+	public void setPassword(String password) {
+		this.password.set(password);
+	}
+
+	public StringProperty passwordProperty() {
+		return password;
+	}
+
+	// firstName
+	public String getFirstName() {
+		return firstName.get();
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName.set(firstName);
+	}
+
+	public StringProperty firstNameProperty() {
+		return firstName;
+	}
+
+	// lastName
+	public String getLastName() {
+		return lastName.get();
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName.set(lastName);
+	}
+
+	public StringProperty lastNameProperty() {
+		return lastName;
+	}
+
+	// department_id
+	public int getDepartmentId() {
+		return departmentId.get();
+	}
+
+	public void setDepartmentId(int departmentId) {
+		this.departmentId.set(departmentId);
+	}
+
+	public IntegerProperty departmentIdProperty() {
+		return departmentId;
+	}
+
+}

@@ -1,0 +1,76 @@
+package model;
+
+import javafx.beans.property.*;
+
+public class User {
+	private IntegerProperty userId;
+	private StringProperty username;
+	private StringProperty password;
+	private StringProperty firstName;
+	private StringProperty lastName;
+	private IntegerProperty departmentId;
+
+	// Constructor
+	public User() {
+		this.userId = new SimpleIntegerProperty();
+		this.username = new SimpleStringProperty();
+		this.password = new SimpleStringProperty();
+		this.firstName = new SimpleStringProperty();
+		this.lastName = new SimpleStringProperty();
+		this.departmentId = new SimpleIntegerProperty();
+	}
+
+	public IntegerProperty getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+    public IntegerProperty userIdProperty(){
+        return userIdd;
+    }
+
+	public StringProperty getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public StringProperty getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public StringProperty getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public StringProperty getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public IntegerProperty getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(int departmentId) {
+		this.departmentId = departmentId;
+	}
+
+	// ...constructors, getters, and setters
+
+}
