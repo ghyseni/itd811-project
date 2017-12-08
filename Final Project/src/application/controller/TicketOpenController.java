@@ -19,7 +19,7 @@ import application.model.Ticket;
 import application.model.TicketDAO;
 import application.model.User;
 
-public class TicketController {
+public class TicketOpenController {
 
 	private User user;
 

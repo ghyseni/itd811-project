@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="344.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.TicketController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="344.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.TicketOpenController">
    <children>
     <TextField fx:id="ticketIdText" layoutX="193.0" layoutY="41.0" prefHeight="25.0" prefWidth="67.0" promptText="Ticket ID" />
       <Label layoutX="194.0" layoutY="21.0" text="Ticket ID" />
@@ -19,7 +19,7 @@
             <TextField fx:id="ticketNameText" prefHeight="25.0" prefWidth="79.0" promptText="Name" />
             <TextArea fx:id="ticketDescriptionTextArea" prefHeight="25.0" prefWidth="79.0" promptText="Description" />            
 		    <ComboBox fx:id="departmentCombo" prefHeight="25.0" prefWidth="79.0" promptText="Department"/>
-            <TextField fx:id="ticketIssuerText" prefHeight="25.0" prefWidth="79.0" promptText="Issuer" />
+            <TextField fx:id="ticketIssuerText" prefHeight="25.0" prefWidth="79.0" promptText="Issuer Id" />
          </children>
       </VBox>
       <VBox layoutX="9.0" layoutY="28.0" prefWidth="67.0" spacing="12.0">

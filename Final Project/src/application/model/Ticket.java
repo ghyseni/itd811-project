@@ -8,7 +8,7 @@ public class Ticket {
 	private StringProperty description;
 	private StringProperty department;
 	private IntegerProperty userId;
-	private IntegerProperty issuerId;
+	private StringProperty issuer;
 
 	// Constructor
 	public Ticket() {
@@ -16,7 +16,7 @@ public class Ticket {
 		this.name = new SimpleStringProperty();
 		this.description = new SimpleStringProperty();
 		this.department = new SimpleStringProperty();
-		this.issuerId = new SimpleIntegerProperty();
+		this.issuer = new SimpleStringProperty();
 		this.userId = new SimpleIntegerProperty();
 	}
 
@@ -86,16 +86,16 @@ public class Ticket {
 	}
 
 	// issuerid
-	public int getIssuerId() {
-		return issuerId.get();
+	public String getIssuer() {
+		return issuer.get();
 	}
 
-	public void setIssuerId(int issuerId) {
-		this.issuerId.set(issuerId);
+	public void setIssuer(String issuer) {
+		this.issuer.set(issuer);
 	}
 
-	public IntegerProperty issuerIdProperty() {
-		return issuerId;
+	public StringProperty issuerProperty() {
+		return issuer;
 	}
 
 }

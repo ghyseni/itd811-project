@@ -22,8 +22,6 @@ import application.model.User;
 
 public class ProfileController {
 
-	private User user;
-
 	// AnchorPane
 	@FXML
 	private AnchorPane ap;
@@ -80,7 +78,7 @@ public class ProfileController {
 
 	// Initializing controller class.
 	public void init(final Login login, User user) {
-		this.user = user;
+
 		fillUserFormInputs(user);
 		if (user != null) {
 			usernameLbl.setText(user.getFirstName() + user.getLastName() + "");
