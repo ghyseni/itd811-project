@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -32,7 +33,7 @@ public class ProfileController {
 	@FXML
 	private TextArea resultArea;
 	@FXML
-	private TextField newPasswordText;
+	private PasswordField newPasswordText;
 	@FXML
 	private TextField userNameText;
 	@FXML

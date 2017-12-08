@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -16,11 +17,9 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import application.model.UserDAO;
+import application.model.User;
 import application.util.Util;
 import application.Login;
-import application.model.User;
-import application.model.User;
-import application.model.UserDAO;
 
 public class UserController {
 
@@ -33,7 +32,7 @@ public class UserController {
 	@FXML
 	private TextArea resultArea;
 	@FXML
-	private TextField newPasswordText;
+	private PasswordField newPasswordText;
 	@FXML
 	private TextField userNameText;
 	@FXML
@@ -129,7 +128,6 @@ public class UserController {
 	}
 
 	// Fill User Form Inputs For Update
-	@FXML
 	private void fillUserFormInputs(User user) {
 		// Set each input field value
 		if (user != null) {
@@ -142,7 +140,6 @@ public class UserController {
 	}
 
 	// Fill User
-	@FXML
 	private void fillUser(User user) throws ClassNotFoundException {
 		// Declare and ObservableList for table view
 		ObservableList<User> userData = FXCollections.observableArrayList();
@@ -153,7 +150,6 @@ public class UserController {
 	}
 
 	// Fill User for TableView and Display User on TextArea
-	@FXML
 	private void fillAndShowUser(User user) throws ClassNotFoundException {
 		if (user != null) {
 			fillUser(user);
@@ -163,7 +159,6 @@ public class UserController {
 	}
 
 	// Fill Users for TableView
-	@FXML
 	private void fillUsers(ObservableList<User> userData) throws ClassNotFoundException {
 		// Set items to the userTable
 		userTable.setItems(userData);
@@ -189,7 +184,7 @@ public class UserController {
 			System.out.println("Problem occurred while updating user: " + e);
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Problem occurred while hashing passowrd: " + e);
+			System.out.println("Problem occurred while hashing password: " + e);
 		}
 	}
 
@@ -215,8 +210,13 @@ public class UserController {
 	@FXML
 	private void deleteUser(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
-			UserDAO.deleteUserWithId(userIdText.getText());
-			System.out.println("User deleted! User id: " + userIdText.getText() + "\n");
+			User user = UserDAO.searchUser(userIdText.getText());
+			if (!user.getRole().equals("admin")) {
+				UserDAO.deleteUserWithId(userIdText.getText());
+				System.out.println("User deleted! User id: " + userIdText.getText() + "\n");
+			} else {
+				System.out.println("Can not delete admin!\n");
+			}
 		} catch (SQLException e) {
 			System.out.println("Problem occurred while deleting user " + e);
 			throw e;

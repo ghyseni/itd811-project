@@ -17,8 +17,8 @@
               <children>
                 <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                 <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <TextField fx:id="usernameTextField" promptText="Use &quot;admin&quot; to login" text="admin" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                <TextField fx:id="passwordTextField" promptText="Use &quot;admin&quot; to login" text="admin" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="usernameTextField" text="admin" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <PasswordField fx:id="passwordTextField" text="admin" GridPane.columnIndex="1" GridPane.rowIndex="1" />
               </children>
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0" prefWidth="109.0" />

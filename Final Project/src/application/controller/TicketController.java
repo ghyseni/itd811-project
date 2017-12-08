@@ -140,7 +140,6 @@ public class TicketController {
 	}
 
 	// Fill Ticket Form Inputs For Update
-	@FXML
 	private void fillTicketFormInputs(Ticket ticket) {
 		// Set each input field value
 		if (ticket != null) {
@@ -153,7 +152,6 @@ public class TicketController {
 	}
 
 	// Fill Ticket
-	@FXML
 	private void fillTicket(Ticket ticket) throws ClassNotFoundException {
 		// Declare and ObservableList for table view
 		ObservableList<Ticket> ticketData = FXCollections.observableArrayList();
@@ -164,7 +162,6 @@ public class TicketController {
 	}
 
 	// Fill Ticket for TableView and Display Ticket on TextArea
-	@FXML
 	private void fillAndShowTicket(Ticket ticket) throws ClassNotFoundException {
 		if (ticket != null) {
 			fillTicket(ticket);
@@ -174,7 +171,6 @@ public class TicketController {
 	}
 
 	// Fill Tickets for TableView
-	@FXML
 	private void fillTickets(ObservableList<Ticket> ticketData) throws ClassNotFoundException {
 		// Set items to the ticketTable
 		ticketTable.setItems(ticketData);
