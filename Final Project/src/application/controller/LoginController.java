@@ -1,19 +1,21 @@
 package application.controller;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import application.Login;
 import application.model.User;
 import application.model.UserDAO;
+import application.util.Util;
 import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 /** Controls the login screen */
 public class LoginController {
-	
+
 	private static int sessionID = 0;
-	private static User user;
+	private User user;
 	@FXML
 	private TextField usernameTextField;
 	@FXML
@@ -31,8 +33,8 @@ public class LoginController {
 				String sessionID = null;
 				User user = authorize();
 				if (user != null) {
-					sessionID=generateSessionID();
-					login.authenticate(user,sessionID);
+					sessionID = generateSessionID();
+					login.authenticate(user, sessionID);
 				}
 			}
 		});
@@ -48,13 +50,14 @@ public class LoginController {
 	 * @throws SQLException
 	 */
 	private User authorize() {
-		String username = usernameTextField.getText();
-		String password = passwordTextField.getText();
+
 		try {
 			// Get User information
+			String username = usernameTextField.getText();
+			String password = Util.hashPassword(passwordTextField.getText());
 			this.user = UserDAO.searchUserByUsernamePassword(username, password);
-			
-//			System.out.println(user.toString());
+
+			// System.out.println(user.toString());
 			return user != null ? user : null;
 
 			// Populate User on TableView and Display on TextArea
@@ -66,8 +69,13 @@ public class LoginController {
 			e.printStackTrace();
 			System.out.println("Error occurred while getting user information from DB.\n" + e);
 			return null;
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Error while converting password to hash.\n" + e);
+			return null;
 		}
-	}	
+	}
 
 	private String generateSessionID() {
 		sessionID++;

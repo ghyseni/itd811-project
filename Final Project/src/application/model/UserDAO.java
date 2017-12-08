@@ -119,11 +119,11 @@ public class UserDAO {
 	// *************************************
 	// UPDATE a user name
 	// *************************************
-	public static void updateUser(int userId, String username, String firstName, String lastName, String role)
-			throws SQLException, ClassNotFoundException {
+	public static void updateUser(int userId, String username, String password, String firstName, String lastName,
+			String role) throws SQLException, ClassNotFoundException {
 		// Declare a UPDATE statement
-		String updateStmt = "UPDATE users SET username = '" + username + "', first_name='" + firstName + "', last_name='"
-				+ lastName + "', role='" + role + "' WHERE user_id = " + userId;
+		String updateStmt = "UPDATE users SET username = '" + username + "', password='" + password + "', first_name='"
+				+ firstName + "', last_name='" + lastName + "', role='" + role + "' WHERE user_id = " + userId;
 
 		// Execute UPDATE operation
 		try {
@@ -153,13 +153,12 @@ public class UserDAO {
 	// *************************************
 	// INSERT a user
 	// *************************************
-	public static void insertUser(String username, String password, String firstName, String lastName, String role) throws SQLException, ClassNotFoundException {
+	public static void insertUser(String username, String password, String firstName, String lastName, String role)
+			throws SQLException, ClassNotFoundException {
 		// Declare a DELETE statement
-		String updateStmt = "INSERT INTO users" + "(username, password, first_name, last_name, role) "
-				+ "VALUES " + "('" + username + "','" + password + "','" + firstName + "','" + lastName + "','" + role
-				+ "')";
+		String updateStmt = "INSERT INTO users" + "(username, password, first_name, last_name, role) " + "VALUES "
+				+ "('" + username + "','" + password + "','" + firstName + "','" + lastName + "','" + role + "')";
 
-		System.out.println(updateStmt);
 		// Execute DELETE operation
 		try {
 			DBUtil.dbExecuteUpdate(updateStmt);

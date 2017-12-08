@@ -12,17 +12,18 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import application.model.UserDAO;
+import application.util.Util;
 import application.Login;
 import application.model.User;
 import application.model.User;
 import application.model.UserDAO;
 
-
 public class UserController {
-	
+
 	// AnchorPane
 	@FXML
 	private AnchorPane ap;
@@ -103,7 +104,7 @@ public class UserController {
 	public void initialize() {
 
 	}
-	
+
 	// Initializing controller class.
 	public void init(final Login login, User user) {
 		userIdColumn.setCellValueFactory(cellData -> cellData.getValue().userIdProperty().asObject());
@@ -118,15 +119,15 @@ public class UserController {
 		userRoles.add("Admin");
 		userRoles.add("Employee");
 		roleCombo.setItems(userRoles);
-		
-		//Add action on table selection
+
+		// Add action on table selection
 		userTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			fillUserFormInputs(newSelection);
 			updateUserBtn.setVisible(true);
 		});
 
 	}
-	
+
 	// Fill User Form Inputs For Update
 	@FXML
 	private void fillUserFormInputs(User user) {
@@ -173,14 +174,22 @@ public class UserController {
 	private void updateUser(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 
 		try {
-			UserDAO.updateUser(Integer.parseInt(userIdText.getText()), userNameText.getText(), firstNameText.getText(),
-					lastNameText.getText(), roleCombo.getValue().toString());
+
+			String plainPassword = newPasswordText.getText();
+			String password = Util.hashPassword(plainPassword);
+
+			UserDAO.updateUser(Integer.parseInt(userIdText.getText()), userNameText.getText(), password,
+					firstNameText.getText(), lastNameText.getText(), roleCombo.getValue().toString());
 
 			searchUsersBtn.fire();
 
 			System.out.println("User has been updated for, user id: " + userIdText.getText() + "\n");
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			System.out.println("Problem occurred while updating user: " + e);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Problem occurred while hashing passowrd: " + e);
 		}
 	}
 
@@ -188,12 +197,17 @@ public class UserController {
 	@FXML
 	private void insertUser(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
-			UserDAO.insertUser(userNameText.getText(), newPasswordText.getText(), firstNameText.getText(),
-					lastNameText.getText(), roleCombo.getValue().toString());
+
+			String newPassword = Util.hashPassword(newPasswordText.getText());
+
+			UserDAO.insertUser(userNameText.getText(), newPassword, firstNameText.getText(), lastNameText.getText(),
+					roleCombo.getValue().toString());
 			System.out.println("User inserted! \n");
 		} catch (SQLException e) {
 			System.out.println("Problem occurred while inserting user " + e);
 			throw e;
+		} catch (NoSuchAlgorithmException e) {
+			System.out.println("Problem occurred while hashing password " + e);
 		}
 	}
 
@@ -208,4 +222,5 @@ public class UserController {
 			throw e;
 		}
 	}
+
 }

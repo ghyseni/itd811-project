@@ -11,9 +11,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import application.model.UserDAO;
+import application.util.Util;
 import application.Login;
 import application.model.User;
 
@@ -100,13 +102,20 @@ public class ProfileController {
 	private void updateUser(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 
 		try {
-			UserDAO.updateUser(user.getUserId(), userNameText.getText(), firstNameText.getText(),
-					lastNameText.getText(), user.getRole());
-			resultLbl.setText("User has been succesfully updated");
-			System.out.println("User has been updated for, user id: " + user.getUserId() + "\n");
+
+			String plainPassword = newPasswordText.getText();
+			String password = Util.hashPassword(plainPassword);
+
+			UserDAO.updateUser(Integer.parseInt(userIdText.getText()), userNameText.getText(), password,
+					firstNameText.getText(), lastNameText.getText(), roleCombo.getValue().toString());
+
+			System.out.println("User has been updated for, user id: " + userIdText.getText() + "\n");
 		} catch (SQLException e) {
-			resultLbl.setText("User failed to be updated");
+			// TODO Auto-generated catch block
 			System.out.println("Problem occurred while updating user: " + e);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Problem occurred while hashing passowrd: " + e);
 		}
 	}
 

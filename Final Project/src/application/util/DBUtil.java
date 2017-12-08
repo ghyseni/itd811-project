@@ -26,7 +26,7 @@ public class DBUtil {
         try {
             Class.forName(JDBC_DRIVER);
         } catch (ClassNotFoundException e) {
-            System.out.println("Where is your Oracle JDBC Driver?");
+            System.out.println("Problem with JDBC Driver?");
             e.printStackTrace();
             throw e;
         }
@@ -37,7 +37,7 @@ public class DBUtil {
         try {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console" + e);
+            System.out.println("Connection Failed!" + e);
             e.printStackTrace();
             throw e;
         }
