@@ -122,7 +122,7 @@ public class UserDAO {
 	public static void updateUser(int userId, String username, String firstName, String lastName, String role)
 			throws SQLException, ClassNotFoundException {
 		// Declare a UPDATE statement
-		String updateStmt = "UPDATE users SET username = '" + username + ", first_name='" + firstName + ", last_name='"
+		String updateStmt = "UPDATE users SET username = '" + username + "', first_name='" + firstName + "', last_name='"
 				+ lastName + "', role='" + role + "' WHERE user_id = " + userId;
 
 		// Execute UPDATE operation

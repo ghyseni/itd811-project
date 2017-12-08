@@ -4,21 +4,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-import java.sql.Date;
 import java.sql.SQLException;
 
+import application.model.UserDAO;
+import application.model.User;
 import application.model.User;
 import application.model.UserDAO;
 
-/**
- * Created by ONUR BASKIRT on 23.02.2016.
- */
+
 public class UserController {
 
 	@FXML
@@ -36,9 +36,20 @@ public class UserController {
 	@FXML
 	private ComboBox<String> roleCombo;
 
+	// Buttons
+	@FXML
+	private Button searchUsersBtn;
+	@FXML
+	private Button searchUserBtn;
+	@FXML
+	private Button updateUserBtn;
+	@FXML
+	private Button addUserBtn;
+	@FXML
+	private Button deleteUserBtn;
 
 	@FXML
-	private TableView userTable;
+	private TableView<User> userTable;
 	@FXML
 	private TableColumn<User, Integer> userIdColumn;
 	@FXML
@@ -62,7 +73,7 @@ public class UserController {
 			fillAndShowUser(user);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			resultArea.setText("Error occurred while getting user information from DB.\n" + e);
+			System.out.println("Error occurred while getting user information from DB.\n" + e);
 			throw e;
 		}
 	}
@@ -81,21 +92,9 @@ public class UserController {
 		}
 	}
 
-	// Initializing the controller class.
-	// This method is automatically called after the fxml file has been loaded.
+	// Initializing controller class. This is called after the fxml has been loaded.
 	@FXML
 	private void initialize() {
-		/*
-		 * The setCellValueFactory(...) that we set on the table columns are used to
-		 * determine which field inside the User objects should be used for the
-		 * particular column. The arrow -> indicates that we're using a Java 8 feature
-		 * called Lambdas. (Another option would be to use a PropertyValueFactory, but
-		 * this is not type-safe
-		 * 
-		 * We're only using StringProperty values for our table columns in this example.
-		 * When you want to use IntegerProperty or DoubleProperty, the
-		 * setCellValueFactory(...) must have an additional asObject():
-		 */
 		userIdColumn.setCellValueFactory(cellData -> cellData.getValue().userIdProperty().asObject());
 		usernameColumn.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
 		userPasswordColumn.setCellValueFactory(cellData -> cellData.getValue().passwordProperty());
@@ -108,7 +107,26 @@ public class UserController {
 		userRoles.add("Admin");
 		userRoles.add("Employee");
 		roleCombo.setItems(userRoles);
+		
+		//Add action on table selection
+		userTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+			fillUserFormInputs(newSelection);
+			updateUserBtn.setVisible(true);
+		});
 
+	}
+	
+	// Fill User Form Inputs For Update
+	@FXML
+	private void fillUserFormInputs(User user) {
+		// Set each input field value
+		if (user != null) {
+			userIdText.setText(Integer.toString(user.getUserId()));
+			userNameText.setText(user.getUsername());
+			firstNameText.setText(user.getFirstName());
+			lastNameText.setText(user.getLastName());
+			roleCombo.setValue(user.getRole());
+		}
 	}
 
 	// Fill User
@@ -122,20 +140,13 @@ public class UserController {
 		userTable.setItems(userData);
 	}
 
-	// Set User information to Text Area
-	@FXML
-	private void setUserInfoToTextArea(User user) {
-		resultArea.setText("First Name: " + user.getFirstName() + "\n" + "Last Name: " + user.getLastName());
-	}
-
 	// Fill User for TableView and Display User on TextArea
 	@FXML
 	private void fillAndShowUser(User user) throws ClassNotFoundException {
 		if (user != null) {
 			fillUser(user);
-			setUserInfoToTextArea(user);
 		} else {
-			resultArea.setText("This user does not exist!\n");
+			System.out.println("This user does not exist!\n");
 		}
 	}
 
@@ -148,14 +159,17 @@ public class UserController {
 
 	// Update user's email with the email which is written on newEmailText field
 	@FXML
-	private void updateUsername(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+	private void updateUser(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 
 		try {
 			UserDAO.updateUser(Integer.parseInt(userIdText.getText()), userNameText.getText(), firstNameText.getText(),
 					lastNameText.getText(), roleCombo.getValue().toString());
-			resultArea.setText("Email has been updated for, user id: " + userIdText.getText() + "\n");
+
+			searchUsersBtn.fire();
+
+			System.out.println("User has been updated for, user id: " + userIdText.getText() + "\n");
 		} catch (SQLException e) {
-			resultArea.setText("Problem occurred while updating email: " + e);
+			System.out.println("Problem occurred while updating user: " + e);
 		}
 	}
 
@@ -165,9 +179,9 @@ public class UserController {
 		try {
 			UserDAO.insertUser(userNameText.getText(), newPasswordText.getText(), firstNameText.getText(),
 					lastNameText.getText(), roleCombo.getValue().toString());
-			resultArea.setText("User inserted! \n");
+			System.out.println("User inserted! \n");
 		} catch (SQLException e) {
-			resultArea.setText("Problem occurred while inserting user " + e);
+			System.out.println("Problem occurred while inserting user " + e);
 			throw e;
 		}
 	}
@@ -177,9 +191,9 @@ public class UserController {
 	private void deleteUser(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
 			UserDAO.deleteUserWithId(userIdText.getText());
-			resultArea.setText("User deleted! User id: " + userIdText.getText() + "\n");
+			System.out.println("User deleted! User id: " + userIdText.getText() + "\n");
 		} catch (SQLException e) {
-			resultArea.setText("Problem occurred while deleting user " + e);
+			System.out.println("Problem occurred while deleting user " + e);
 			throw e;
 		}
 	}

@@ -17,9 +17,6 @@ import java.sql.SQLException;
 import application.model.Ticket;
 import application.model.TicketDAO;
 
-/**
- * Created by ONUR BASKIRT on 23.02.2016.
- */
 public class TicketController {
 	// Inputs
 	@FXML
@@ -35,7 +32,7 @@ public class TicketController {
 	@FXML
 	private TextField ticketIssuerIdText;
 
-	// not used
+	// Buttons
 	@FXML
 	private Button searchTicketsBtn;
 	@FXML
@@ -62,8 +59,7 @@ public class TicketController {
 	private TableColumn<Ticket, Integer> ticketUserIdColumn;
 	@FXML
 	private TableColumn<Ticket, Integer> ticketIssuerIdColumn;
-	@FXML
-	private TextArea resultArea;
+
 
 	// Search an ticket
 	@FXML
@@ -76,7 +72,7 @@ public class TicketController {
 			fillAndShowTicket(ticket);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			resultArea.setText("Error occurred while getting ticket information from DB.\n" + e);
+			System.out.println("Error occurred while getting ticket information from DB.\n" + e);
 			throw e;
 		}
 	}
@@ -95,21 +91,9 @@ public class TicketController {
 		}
 	}
 
-	// Initializing the controller class.
-	// This method is automatically called after the fxml file has been loaded.
+	// Initializing controller class. This is called after the fxml has been loaded.
 	@FXML
 	private void initialize() {
-		/*
-		 * The setCellValueFactory(...) that we set on the table columns are used to
-		 * determine which field inside the Ticket objects should be used for the
-		 * particular column. The arrow -> indicates that we're using a Java 8 feature
-		 * called Lambdas. (Another option would be to use a PropertyValueFactory, but
-		 * this is not type-safe
-		 * 
-		 * We're only using StringProperty values for our table columns in this example.
-		 * When you want to use IntegerProperty or DoubleProperty, the
-		 * setCellValueFactory(...) must have an additional asObject():
-		 */
 		ticketIdColumn.setCellValueFactory(cellData -> cellData.getValue().ticketIdProperty().asObject());
 		ticketNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 		ticketDescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
@@ -122,7 +106,8 @@ public class TicketController {
 		userDepartments.add("Production");
 		userDepartments.add("IT");
 		departmentCombo.setItems(userDepartments);
-
+		
+		//Add action on table selection
 		ticketTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			fillTicketFormInputs(newSelection);
 			updateTicketBtn.setVisible(true);
@@ -155,20 +140,13 @@ public class TicketController {
 		ticketTable.setItems(ticketData);
 	}
 
-	// Set Ticket information to Text Area
-	@FXML
-	private void setTicketInfoToTextArea(Ticket ticket) {
-		resultArea.setText("Name: " + ticket.getName() + "\n" + "Description: " + ticket.getDescription());
-	}
-
 	// Fill Ticket for TableView and Display Ticket on TextArea
 	@FXML
 	private void fillAndShowTicket(Ticket ticket) throws ClassNotFoundException {
 		if (ticket != null) {
 			fillTicket(ticket);
-			setTicketInfoToTextArea(ticket);
 		} else {
-			resultArea.setText("This ticket does not exist!\n");
+			System.out.println("This ticket does not exist!\n");
 		}
 	}
 
@@ -189,9 +167,9 @@ public class TicketController {
 
 			searchTicketsBtn.fire();
 
-			resultArea.setText("Ticket has been updated for, ticket id: " + ticketIdText.getText() + "\n");
+			System.out.println("Ticket has been updated for, ticket id: " + ticketIdText.getText() + "\n");
 		} catch (SQLException e) {
-			resultArea.setText("Problem occurred while updating ticket name: " + e);
+			System.out.println("Problem occurred while updating ticket name: " + e);
 		}
 	}
 
@@ -202,9 +180,9 @@ public class TicketController {
 			TicketDAO.insertTicket(ticketNameText.getText(), ticketDescriptionTextArea.getText(),
 					departmentCombo.getValue().toString(), Integer.parseInt(ticketIssuerIdText.getText()),
 					Integer.parseInt(ticketUserIdText.getText()));
-			resultArea.setText("Ticket inserted! \n");
+			System.out.println("Ticket inserted! \n");
 		} catch (SQLException e) {
-			resultArea.setText("Problem occurred while inserting ticket " + e);
+			System.out.println("Problem occurred while inserting ticket " + e);
 			throw e;
 		}
 	}
@@ -214,9 +192,9 @@ public class TicketController {
 	private void deleteTicket(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
 			TicketDAO.deleteTicketWithId(ticketIdText.getText());
-			resultArea.setText("Ticket deleted! Ticket id: " + ticketIdText.getText() + "\n");
+			System.out.println("Ticket deleted! Ticket id: " + ticketIdText.getText() + "\n");
 		} catch (SQLException e) {
-			resultArea.setText("Problem occurred while deleting ticket " + e);
+			System.out.println("Problem occurred while deleting ticket " + e);
 			throw e;
 		}
 	}
