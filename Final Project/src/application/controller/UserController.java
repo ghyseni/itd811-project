@@ -10,16 +10,22 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 import java.sql.SQLException;
 
 import application.model.UserDAO;
+import application.Login;
 import application.model.User;
 import application.model.User;
 import application.model.UserDAO;
 
 
 public class UserController {
+	
+	// AnchorPane
+	@FXML
+	private AnchorPane ap;
 
 	@FXML
 	private TextField userIdText;
@@ -92,9 +98,14 @@ public class UserController {
 		}
 	}
 
-	// Initializing controller class. This is called after the fxml has been loaded.
+	// Called after FXML load
 	@FXML
-	private void initialize() {
+	public void initialize() {
+
+	}
+	
+	// Initializing controller class.
+	public void init(final Login login, User user) {
 		userIdColumn.setCellValueFactory(cellData -> cellData.getValue().userIdProperty().asObject());
 		usernameColumn.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
 		userPasswordColumn.setCellValueFactory(cellData -> cellData.getValue().passwordProperty());

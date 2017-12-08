@@ -16,9 +16,11 @@
               <MenuItem id="exitMenuItem" fx:id="exitMenuItem" mnemonicParsing="false" text="Exit" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+              <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem id="tickets" fx:id="tickets" mnemonicParsing="false" text="Tickets" />
+            <MenuItem id="profileMenuItem" fx:id="profileMenuItem" mnemonicParsing="false" text="Profile" />
+              <MenuItem id="ticketsMenuItem" fx:id="ticketsMenuItem" mnemonicParsing="false" text="Tickets" />
+              <MenuItem id="usersMenuItem" fx:id="usersMenuItem" mnemonicParsing="false" text="Users" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

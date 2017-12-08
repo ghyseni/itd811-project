@@ -4,15 +4,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="344.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.TicketController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="344.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.TicketController">
    <children>
     <TextField fx:id="ticketIdText" layoutX="193.0" layoutY="41.0" prefHeight="25.0" prefWidth="67.0" promptText="Ticket ID" />
       <Label layoutX="194.0" layoutY="21.0" text="Ticket ID" />
       <Button fx:id="searchTicketBtn" layoutX="194.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchTicket" prefHeight="25.0" prefWidth="56.0" text="Search" />
       <Button fx:id="deleteTicketBtn" layoutX="332.0" layoutY="70.0" mnemonicParsing="false" onAction="#deleteTicket" prefHeight="25.0" prefWidth="56.0" text="Delete" />
-      <Button fx:id="addTicketBtn" layoutX="97.0" layoutY="178.0" mnemonicParsing="false" onAction="#insertTicket" text="Add Ticket" />
-      <Button fx:id="updateTicketBtn" visible="false" layoutX="97.0" layoutY="203.0" mnemonicParsing="false" onAction="#updateTicket" prefHeight="25.0" prefWidth="56.0" text="Update" />     
-     <TextField fx:id="ticketNameText" layoutX="268.0" layoutY="41.0" prefHeight="25.0" prefWidth="120.0" promptText="Keyword" />
+      <Button fx:id="addTicketBtn" layoutX="97.0" layoutY="180.0" mnemonicParsing="false" onAction="#insertTicket" text="Add Ticket" />
+      <Button fx:id="updateTicketBtn" visible="false" layoutX="97.0" layoutY="207.0" mnemonicParsing="false" onAction="#updateTicket" prefHeight="25.0" prefWidth="56.0" text="Update" />     
+     <TextField fx:id="ticketKeywordText" layoutX="268.0" layoutY="41.0" prefHeight="25.0" prefWidth="120.0" promptText="Keyword" text=""/>
       <Label layoutX="270.0" layoutY="21.0" text="Keyword" /> 
       <VBox layoutX="97.0" layoutY="24.0" spacing="4.0">
          <children>
@@ -20,16 +20,14 @@
             <TextArea fx:id="ticketDescriptionTextArea" prefHeight="25.0" prefWidth="79.0" promptText="Description" />            
 		    <ComboBox fx:id="departmentCombo" prefHeight="25.0" prefWidth="79.0" promptText="Department"/>
             <TextField fx:id="ticketIssuerIdText" prefHeight="25.0" prefWidth="79.0" promptText="Issuer Id" />
-            <TextField fx:id="ticketUserIdText" prefHeight="25.0" prefWidth="79.0" promptText="User Id" />
          </children>
       </VBox>
       <VBox layoutX="9.0" layoutY="28.0" prefWidth="67.0" spacing="12.0">
          <children>
             <Label text="Ticketname" />
             <Label text="Description" />
-            <Label text="Department" />
+            <Label layoutY="80" text="Department" />
             <Label text="Issuer Id" />
-             <Label text="User Id" />
          </children>
       </VBox>
       <Separator layoutY="14.0" prefHeight="4.0" prefWidth="600.0" />
@@ -41,7 +39,7 @@
           <TableColumn fx:id="ticketDescriptionColumn" prefWidth="73.0" text="Description" />
            <TableColumn fx:id="ticketDepartmentColumn" prefWidth="73.0" text="Department" />
             <TableColumn fx:id="ticketIssuerIdColumn" prefWidth="73.0" text="Issuer Id" />
-           <TableColumn fx:id="ticketUserIdColumn" prefWidth="73.0" text="User Id" />
+             <TableColumn fx:id="ticketUserIdColumn" prefWidth="73.0" text="Issuer Id" />
         </columns>
       </TableView>
       <Button fx:id="searchTicketsBtn" layoutX="396.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchTickets" prefHeight="25.0" prefWidth="139.0" text="Search All Tickets" />

@@ -10,14 +10,23 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
-import java.sql.Date;
 import java.sql.SQLException;
 
+import application.Login;
 import application.model.Ticket;
 import application.model.TicketDAO;
+import application.model.User;
 
 public class TicketController {
+
+	private User user;
+
+	// AnchorPane
+	@FXML
+	private AnchorPane ap;
+
 	// Inputs
 	@FXML
 	private TextField ticketIdText;
@@ -28,9 +37,10 @@ public class TicketController {
 	@FXML
 	private ComboBox<String> departmentCombo;
 	@FXML
-	private TextField ticketUserIdText;
-	@FXML
 	private TextField ticketIssuerIdText;
+	
+	@FXML
+	private TextField ticketKeywordText;
 
 	// Buttons
 	@FXML
@@ -43,6 +53,8 @@ public class TicketController {
 	private Button addTicketBtn;
 	@FXML
 	private Button deleteTicketBtn;
+	@FXML
+	private Button closeTicketBtn;
 
 	// Table
 	@FXML
@@ -59,7 +71,6 @@ public class TicketController {
 	private TableColumn<Ticket, Integer> ticketUserIdColumn;
 	@FXML
 	private TableColumn<Ticket, Integer> ticketIssuerIdColumn;
-
 
 	// Search an ticket
 	@FXML
@@ -82,7 +93,13 @@ public class TicketController {
 	private void searchTickets(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
 			// Get all Tickets information
-			ObservableList<Ticket> ticketData = TicketDAO.searchTickets();
+			ObservableList<Ticket> ticketData = null;
+			String keyword = ticketKeywordText.getText();
+			if (user.getRole().equals("admin")) {
+				ticketData = TicketDAO.searchTickets(keyword);
+			} else {
+				ticketData = TicketDAO.searchTickets(keyword,user.getUserId());
+			}
 			// Fill Tickets on TableView
 			fillTickets(ticketData);
 		} catch (SQLException e) {
@@ -91,9 +108,17 @@ public class TicketController {
 		}
 	}
 
-	// Initializing controller class. This is called after the fxml has been loaded.
+	// Called after fxml load
 	@FXML
-	private void initialize() {
+	public void initialize() {
+
+	}
+
+	// Initializing controller class.
+	public void init(final Login login, User user) {
+		
+		this.user = user;
+		
 		ticketIdColumn.setCellValueFactory(cellData -> cellData.getValue().ticketIdProperty().asObject());
 		ticketNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 		ticketDescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
@@ -106,13 +131,12 @@ public class TicketController {
 		userDepartments.add("Production");
 		userDepartments.add("IT");
 		departmentCombo.setItems(userDepartments);
-		
-		//Add action on table selection
+
+		// Add action on table selection
 		ticketTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			fillTicketFormInputs(newSelection);
 			updateTicketBtn.setVisible(true);
 		});
-
 	}
 
 	// Fill Ticket Form Inputs For Update
@@ -125,7 +149,6 @@ public class TicketController {
 			ticketDescriptionTextArea.setText(ticket.getDescription());
 			departmentCombo.setValue(ticket.getDepartment());
 			ticketIssuerIdText.setText(Integer.toString(ticket.getIssuerId()));
-			ticketUserIdText.setText(Integer.toString(ticket.getUserId()));
 		}
 	}
 
@@ -163,7 +186,7 @@ public class TicketController {
 		try {
 			TicketDAO.updateTicket(ticketIdText.getText(), ticketNameText.getText(),
 					ticketDescriptionTextArea.getText(), departmentCombo.getValue(), ticketIssuerIdText.getText(),
-					ticketUserIdText.getText());
+					user.getUserId());
 
 			searchTicketsBtn.fire();
 
@@ -178,8 +201,7 @@ public class TicketController {
 	private void insertTicket(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
 			TicketDAO.insertTicket(ticketNameText.getText(), ticketDescriptionTextArea.getText(),
-					departmentCombo.getValue().toString(), Integer.parseInt(ticketIssuerIdText.getText()),
-					Integer.parseInt(ticketUserIdText.getText()));
+					departmentCombo.getValue().toString(), Integer.parseInt(ticketIssuerIdText.getText()),user.getUserId());
 			System.out.println("Ticket inserted! \n");
 		} catch (SQLException e) {
 			System.out.println("Problem occurred while inserting ticket " + e);

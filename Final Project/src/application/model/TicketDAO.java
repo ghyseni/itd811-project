@@ -54,16 +54,53 @@ public class TicketDAO {
 	// *******************************
 	// SELECT Tickets
 	// *******************************
-	public static ObservableList<Ticket> searchTickets() throws SQLException, ClassNotFoundException {
+	public static ObservableList<Ticket> searchTickets(String keyword) throws SQLException, ClassNotFoundException {
 		// Declare a SELECT statement
-		String selectStmt = "SELECT * FROM tickets";
+		String selectStmt = "";
+		if (keyword.isEmpty()) {
+			selectStmt = "SELECT * FROM tickets";
+		} else {
+			selectStmt = "SELECT * FROM tickets where name LIKE '%" + keyword + "%' OR description LIKE '%" + keyword
+					+ "%'";
+		}
 
 		// Execute SELECT statement
 		try {
 			// Get ResultSet from dbExecuteQuery method
 			ResultSet rsTickets = DBUtil.dbExecuteQuery(selectStmt);
 
-			// Send ResultSet to the getTicketList method and get ticketloyee object
+			// Send ResultSet to the getTicketList method and get ticket object
+			ObservableList<Ticket> ticketList = getTicketList(rsTickets);
+
+			// Return ticket object
+			return ticketList;
+		} catch (SQLException e) {
+			System.out.println("SQL select operation has been failed: " + e);
+			// Return exception
+			throw e;
+		}
+	}
+
+	// *******************************
+	// SELECT Tickets by userId
+	// *******************************
+	public static ObservableList<Ticket> searchTickets(String keyword, int userId)
+			throws SQLException, ClassNotFoundException {
+		// Declare a SELECT statement
+		String selectStmt = "";
+		if (keyword.isEmpty()) {
+			selectStmt = "SELECT * FROM tickets where user_id=" + userId;
+		} else {
+			selectStmt = "SELECT * FROM tickets where name LIKE '%" + keyword + "%' OR description LIKE '%" + keyword
+					+ "%' AND user_id=" + userId;
+		}
+
+		// Execute SELECT statement
+		try {
+			// Get ResultSet from dbExecuteQuery method
+			ResultSet rsTickets = DBUtil.dbExecuteQuery(selectStmt);
+
+			// Send ResultSet to the getTicketList method and get ticket object
 			ObservableList<Ticket> ticketList = getTicketList(rsTickets);
 
 			// Return ticket object
@@ -99,7 +136,7 @@ public class TicketDAO {
 	// UPDATE a ticket name
 	// *************************************
 	public static void updateTicket(String ticketId, String ticketName, String ticketDescription,
-			String ticketDepartment, String issuerId, String userId) throws SQLException, ClassNotFoundException {
+			String ticketDepartment, String issuerId, int userId) throws SQLException, ClassNotFoundException {
 		// Declare a UPDATE statement
 		String updateStmt = "UPDATE tickets SET name = '" + ticketName + "', description = '" + ticketDescription
 				+ "', department = '" + ticketDepartment + "', issuer_id = " + issuerId + ", user_id = " + userId

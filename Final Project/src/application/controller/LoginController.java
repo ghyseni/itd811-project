@@ -11,6 +11,9 @@ import javafx.scene.control.*;
 
 /** Controls the login screen */
 public class LoginController {
+	
+	private static int sessionID = 0;
+	private static User user;
 	@FXML
 	private TextField usernameTextField;
 	@FXML
@@ -49,8 +52,7 @@ public class LoginController {
 		String password = passwordTextField.getText();
 		try {
 			// Get User information
-			User user;
-			user = UserDAO.searchUserByUsernamePassword(username, password);
+			this.user = UserDAO.searchUserByUsernamePassword(username, password);
 			
 //			System.out.println(user.toString());
 			return user != null ? user : null;
@@ -65,9 +67,7 @@ public class LoginController {
 			System.out.println("Error occurred while getting user information from DB.\n" + e);
 			return null;
 		}
-	}
-
-	private static int sessionID = 0;
+	}	
 
 	private String generateSessionID() {
 		sessionID++;
