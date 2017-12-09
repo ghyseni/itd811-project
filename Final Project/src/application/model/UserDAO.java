@@ -17,11 +17,11 @@ import javafx.collections.ObservableList;
 public class UserDAO {
 
 	/**
-	 * Call to create table users
+	 * Call to create table g_hyse_users
 	 */
 	public static void createTable() {
 
-		String createTableStmt = "CREATE TABLE users (user_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,"
+		String createTableStmt = "CREATE TABLE g_hyse_users (user_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,"
 				+ " username varchar(30) NOT NULL," + "  password varchar(64) NOT NULL,"
 				+ " first_name varchar(30) NOT NULL," + "  last_name varchar(30) NOT NULL,"
 				+ " role varchar(30) NOT NULL," + "  PRIMARY KEY ( user_id ))";
@@ -30,7 +30,7 @@ public class UserDAO {
 		try {
 			DBUtil.executeUpdate(createTableStmt);
 		} catch (SQLException e) {
-			System.out.println("While creating table users, error occured." + e);
+			System.out.println("While creating table g_hyse_users, error occured." + e);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,7 +44,7 @@ public class UserDAO {
 
 		//Admin password=admin
 		//Qendrese password=test
-		String insertStmt = "INSERT INTO users (username, password, first_name, last_name, role) VALUES"
+		String insertStmt = "INSERT INTO g_hyse_users (username, password, first_name, last_name, role) VALUES"
 				+ "('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'Grese', 'Hyseni', 'admin'),"
 				+ "('qendrese', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Qendrese', 'Hyseni', 'Employee');"
 				+ "";
@@ -55,7 +55,7 @@ public class UserDAO {
 		try {
 			DBUtil.executeUpdate(insertStmt);
 		} catch (SQLException e) {
-			System.out.println("While  inserting users, error occured." + e);
+			System.out.println("While  inserting g_hyse_users, error occured." + e);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -72,7 +72,7 @@ public class UserDAO {
 	 */
 	public static User searchUser(String userId) throws SQLException, ClassNotFoundException {
 		// Declare a SELECT statement
-		String selectStmt = "SELECT * FROM users WHERE user_id=" + userId;
+		String selectStmt = "SELECT * FROM g_hyse_users WHERE user_id=" + userId;
 
 		// Execute SELECT statement
 		try {
@@ -103,7 +103,7 @@ public class UserDAO {
 	public static User searchUserByUsernamePassword(String username, String password)
 			throws SQLException, ClassNotFoundException {
 
-		String selectStmt = "SELECT * FROM users WHERE username='" + username + "' and password='" + password + "'";
+		String selectStmt = "SELECT * FROM g_hyse_users WHERE username='" + username + "' and password='" + password + "'";
 
 		// Execute SELECT statement
 		try {
@@ -145,7 +145,7 @@ public class UserDAO {
 	 */
 	public static ObservableList<User> searchUsers() throws SQLException, ClassNotFoundException {
 
-		String selectStmt = "SELECT * FROM users";
+		String selectStmt = "SELECT * FROM g_hyse_users";
 
 		// Execute SELECT statement
 		try {
@@ -197,7 +197,7 @@ public class UserDAO {
 	public static void updateUser(int userId, String username, String password, String firstName, String lastName,
 			String role) throws SQLException, ClassNotFoundException {
 
-		String updateStmt = "UPDATE users SET username = '" + username + "', password='" + password + "', first_name='"
+		String updateStmt = "UPDATE g_hyse_users SET username = '" + username + "', password='" + password + "', first_name='"
 				+ firstName + "', last_name='" + lastName + "', role='" + role + "' WHERE user_id = " + userId;
 
 		// Execute UPDATE operation
@@ -218,7 +218,7 @@ public class UserDAO {
 	 */
 	public static void deleteUserWithId(String userId) throws SQLException, ClassNotFoundException {
 
-		String updateStmt = "DELETE FROM users WHERE user_id =" + userId;
+		String updateStmt = "DELETE FROM g_hyse_users WHERE user_id =" + userId;
 
 		// Execute UPDATE operation
 		try {
@@ -243,7 +243,7 @@ public class UserDAO {
 	public static void insertUser(String username, String password, String firstName, String lastName, String role)
 			throws SQLException, ClassNotFoundException {
 
-		String updateStmt = "INSERT INTO users" + "(username, password, first_name, last_name, role) " + "VALUES "
+		String updateStmt = "INSERT INTO g_hyse_users" + "(username, password, first_name, last_name, role) " + "VALUES "
 				+ "('" + username + "','" + password + "','" + firstName + "','" + lastName + "','" + role + "')";
 
 		// Execute DELETE operation

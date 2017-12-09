@@ -4,26 +4,31 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import application.model.UserDAO;
 import application.model.User;
 import application.util.Util;
 import application.Login;
+
 /**
  * @author gresehyseni
  * 
- *         Final Project - 12/05/2017
+ *         Final Project - 12/03/2017
  * 
  *         Connects with UserView and User Model, by interacting with both.
  */
@@ -77,6 +82,7 @@ public class UserController {
 
 	/**
 	 * Search user by ID
+	 * 
 	 * @param actionEvent
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
@@ -97,6 +103,7 @@ public class UserController {
 
 	/**
 	 * Search all users
+	 * 
 	 * @param actionEvent
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -194,6 +201,7 @@ public class UserController {
 
 	/**
 	 * Fill Users for TableView
+	 * 
 	 * @param userData
 	 * @throws ClassNotFoundException
 	 */
@@ -204,6 +212,7 @@ public class UserController {
 
 	/**
 	 * Update user
+	 * 
 	 * @param actionEvent
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -233,6 +242,7 @@ public class UserController {
 
 	/**
 	 * Insert user to the DB
+	 * 
 	 * @param actionEvent
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
@@ -256,23 +266,31 @@ public class UserController {
 
 	/**
 	 * Delete user with by Id from DB
+	 * 
 	 * @param actionEvent
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
 	@FXML
 	private void deleteUser(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-		try {
-			User user = UserDAO.searchUser(userIdText.getText());
-			if (!user.getRole().equals("admin")) {
-				UserDAO.deleteUserWithId(userIdText.getText());
-				System.out.println("User deleted! User id: " + userIdText.getText() + "\n");
-			} else {
-				System.out.println("Can not delete admin!\n");
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Delete user.");
+		alert.setHeaderText("Click OK to confirm you want to delete this user.");
+
+		Optional<ButtonType> answer = alert.showAndWait();
+		if (answer.get() == ButtonType.OK) {
+			try {
+				User user = UserDAO.searchUser(userIdText.getText());
+				if (!user.getRole().equals("admin")) {
+					UserDAO.deleteUserWithId(userIdText.getText());
+					System.out.println("User deleted! User id: " + userIdText.getText() + "\n");
+				} else {
+					System.out.println("Can not delete admin!\n");
+				}
+			} catch (SQLException e) {
+				System.out.println("Problem occurred while deleting user " + e);
+				throw e;
 			}
-		} catch (SQLException e) {
-			System.out.println("Problem occurred while deleting user " + e);
-			throw e;
 		}
 	}
 

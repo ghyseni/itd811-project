@@ -17,11 +17,11 @@ import javafx.collections.ObservableList;
 public class TicketDAO {
 	
 	/**
-	 * Call to create table tickets
+	 * Call to create table g_hyse_tickets
 	 */
 	public static void createTable() {
 
-		String createTableStmt = "CREATE TABLE tickets (" + 
+		String createTableStmt = "CREATE TABLE g_hyse_tickets (" + 
 				" ticket_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT," + 
 				" name varchar(30) NOT NULL," + 
 				" description varchar(200) NOT NULL," + 
@@ -36,7 +36,7 @@ public class TicketDAO {
 		try {
 			DBUtil.executeUpdate(createTableStmt);
 		} catch (SQLException e) {
-			System.out.println("While creating table tickets, error occured." + e);
+			System.out.println("While creating table g_hyse_tickets, error occured." + e);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,7 +56,7 @@ public class TicketDAO {
 	public static Ticket searchTicket(String ticketId) throws SQLException, ClassNotFoundException {
 		// Declare a SELECT statement
 
-		String selectStmt = "SELECT * FROM tickets INNER JOIN users ON tickets.user_id=users.user_id WHERE ticket_id="
+		String selectStmt = "SELECT * FROM g_hyse_tickets INNER JOIN g_hyse_users ON g_hyse_tickets.user_id=g_hyse_users.user_id WHERE ticket_id="
 				+ ticketId;
 		System.out.println(selectStmt);
 
@@ -117,7 +117,7 @@ public class TicketDAO {
 			keyword = "%" + keyword + "%";
 		}
 
-		String selectStmt = "SELECT * FROM tickets INNER JOIN users ON tickets.user_id=users.user_id WHERE (name LIKE '"
+		String selectStmt = "SELECT * FROM g_hyse_tickets INNER JOIN g_hyse_users ON g_hyse_tickets.user_id=g_hyse_users.user_id WHERE (name LIKE '"
 				+ keyword + "' OR description LIKE '" + keyword + "') AND status LIKE '" + status + "'";
 
 		// Execute SELECT statement
@@ -153,8 +153,8 @@ public class TicketDAO {
 			keyword = "%" + keyword + "%";
 		}
 
-		String selectStmt = "SELECT * FROM tickets INNER JOIN users ON tickets.user_id=users.user_id WHERE (name LIKE '" + keyword + "' OR description LIKE '" + keyword
-				+ "') AND status LIKE '" + status + "' AND tickets.user_id=" + userId;
+		String selectStmt = "SELECT * FROM g_hyse_tickets INNER JOIN g_hyse_users ON g_hyse_tickets.user_id=g_hyse_users.user_id WHERE (name LIKE '" + keyword + "' OR description LIKE '" + keyword
+				+ "') AND status LIKE '" + status + "' AND g_hyse_tickets.user_id=" + userId;
 
 		// Execute SELECT statement
 		try {
@@ -168,7 +168,7 @@ public class TicketDAO {
 	}
 
 	/**
-	 * Select * from tickets. Set Ticket Object's attributes from DB ResultSet.
+	 * Select * from g_hyse_tickets. Set Ticket Object's attributes from DB ResultSet.
 	 * 
 	 * @param rs
 	 * @return
@@ -214,7 +214,7 @@ public class TicketDAO {
 			String ticketDepartment, String issuer, int userId, String status)
 			throws SQLException, ClassNotFoundException {
 
-		String updateStmt = "UPDATE tickets SET name = '" + ticketName + "', description = '" + ticketDescription
+		String updateStmt = "UPDATE g_hyse_tickets SET name = '" + ticketName + "', description = '" + ticketDescription
 				+ "', department = '" + ticketDepartment + "', issuer = '" + issuer + "', user_id = " + userId
 				+ ", status='" + status + "' WHERE ticket_id = " + ticketId;
 
@@ -236,7 +236,7 @@ public class TicketDAO {
 	 */
 	public static void deleteTicketWithId(String ticketId) throws SQLException, ClassNotFoundException {
 
-		String updateStmt = "DELETE FROM tickets WHERE ticket_id =" + ticketId;
+		String updateStmt = "DELETE FROM g_hyse_tickets WHERE ticket_id =" + ticketId;
 
 		// Execute UPDATE operation
 		try {
@@ -262,7 +262,7 @@ public class TicketDAO {
 	public static void insertTicket(String name, String description, String department, String issuer, int userId,
 			String status) throws SQLException, ClassNotFoundException {
 
-		String updateStmt = "INSERT INTO tickets " + "(name, description, department, issuer, user_id, status) "
+		String updateStmt = "INSERT INTO g_hyse_tickets " + "(name, description, department, issuer, user_id, status) "
 				+ "VALUES " + "('" + name + "','" + description + "','" + department + "','" + issuer + "'," + userId
 				+ ",'" + status + "')";
 		System.out.println(updateStmt);

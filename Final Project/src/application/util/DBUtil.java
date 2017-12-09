@@ -5,7 +5,7 @@ import java.sql.*;
 /**
  * @author gresehyseni
  * 
- *         Final Project - 12/04/2017
+ *         Final Project - 12/01/2017
  * 
  *         Provides helpful methods to perform db operations. This avoids code
  *         repetition.
@@ -15,14 +15,20 @@ public class DBUtil {
 	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 
 	// Connection fields
+	// private static Connection conn = null;
+	// static final String DATABASE_NAME = "test";
+	// static final String DB_URL = "jdbc:mysql://localhost/" + DATABASE_NAME;
+	// static final String USER = "root";
+	// static final String PASS = "";
+
 	private static Connection conn = null;
-	static final String DATABASE_NAME = "test";
-	static final String DB_URL = "jdbc:mysql://localhost/" + DATABASE_NAME;
-	static final String USER = "root";
-	static final String PASS = "";
+	static final String DB_URL = "jdbc:mysql://www.papademas.net:3306/tickets?autoReconnect=true&useSSL=false";
+	static final String USER = "fp411";
+	static final String PASS = "411";
 
 	/**
 	 * Connect to DB
+	 * 
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
@@ -48,6 +54,7 @@ public class DBUtil {
 
 	/**
 	 * Close Connection
+	 * 
 	 * @throws SQLException
 	 */
 	public static void disconnect() throws SQLException {
@@ -62,6 +69,7 @@ public class DBUtil {
 
 	/**
 	 * DB Execute Query Operation
+	 * 
 	 * @param queryStmt
 	 * @return
 	 * @throws SQLException
@@ -84,6 +92,7 @@ public class DBUtil {
 
 	/**
 	 * DB Execute Update (For Update/Insert/Delete) Operation
+	 * 
 	 * @param sqlStmt
 	 * @throws SQLException
 	 * @throws ClassNotFoundException

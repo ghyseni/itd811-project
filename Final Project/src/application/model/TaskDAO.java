@@ -18,11 +18,11 @@ import javafx.collections.ObservableList;
 public class TaskDAO {
 
 	/**
-	 * Call to create table tasks
+	 * Call to create table g_hyse_tasks
 	 */
 	public static void createTable() {
 
-		String createTableStmt = "CREATE TABLE tasks (task_id int(11) NOT NULL AUTO_INCREMENT,"
+		String createTableStmt = "CREATE TABLE g_hyse_tasks (task_id int(11) NOT NULL AUTO_INCREMENT,"
 				+ " name varchar(200) NOT NULL," + "  description varchar(300) NOT NULL,"
 				+ " assigned_to varchar(30) NOT NULL," + "  status varchar(30) NOT NULL,"
 				+ " created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,"
@@ -34,7 +34,7 @@ public class TaskDAO {
 		try {
 			DBUtil.executeUpdate(createTableStmt);
 		} catch (SQLException e) {
-			System.out.println("While creating table tasks, error occured." + e);
+			System.out.println("While creating table g_hyse_tasks, error occured." + e);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -51,7 +51,7 @@ public class TaskDAO {
 	 */
 	public static Task searchTask(String taskId) throws SQLException, ClassNotFoundException {
 
-		String selectStmt = "SELECT * FROM tasks WHERE task_id=" + taskId;
+		String selectStmt = "SELECT * FROM g_hyse_tasks WHERE task_id=" + taskId;
 		System.out.println(selectStmt);
 
 		// Execute SELECT statement
@@ -110,7 +110,7 @@ public class TaskDAO {
 			keyword = "%" + keyword + "%";
 		}
 
-		String selectStmt = "SELECT * FROM tasks WHERE (name LIKE '" + keyword + "' OR description LIKE '" + keyword
+		String selectStmt = "SELECT * FROM g_hyse_tasks WHERE (name LIKE '" + keyword + "' OR description LIKE '" + keyword
 				+ "') AND status LIKE '" + status + "' AND ticket_id=" + ticketId;
 
 		// Execute SELECT statement
@@ -167,7 +167,7 @@ public class TaskDAO {
 	public static void updateTask(String taskId, String taskName, String taskDescription, String assignedTo,
 			String status) throws SQLException, ClassNotFoundException {
 
-		String updateStmt = "UPDATE tasks SET name = '" + taskName + "', description = '" + taskDescription
+		String updateStmt = "UPDATE g_hyse_tasks SET name = '" + taskName + "', description = '" + taskDescription
 				+ "', assigned_to = '" + assignedTo + "', status='" + status + "' WHERE task_id = " + taskId;
 
 		// Execute operation UPDATE
@@ -188,7 +188,7 @@ public class TaskDAO {
 	 */
 	public static void deleteTaskWithId(String taskId) throws SQLException, ClassNotFoundException {
 
-		String updateStmt = "DELETE FROM tasks WHERE task_id =" + taskId;
+		String updateStmt = "DELETE FROM g_hyse_tasks WHERE task_id =" + taskId;
 
 		// Execute operation UPDATE
 		try {
@@ -212,7 +212,7 @@ public class TaskDAO {
 	 */
 	public static void insertTask(String name, String description, String assignedTo, String status, int ticketId)
 			throws SQLException, ClassNotFoundException {
-		String updateStmt = "INSERT INTO tasks " + "(name, description, assigned_to, status, ticket_id) " + "VALUES "
+		String updateStmt = "INSERT INTO g_hyse_tasks " + "(name, description, assigned_to, status, ticket_id) " + "VALUES "
 				+ "('" + name + "','" + description + "','" + assignedTo + "','" + status + "'," + ticketId + ")";
 		System.out.println(updateStmt);
 		// Execute operation DELETE

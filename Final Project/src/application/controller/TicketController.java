@@ -5,7 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -14,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 import application.Login;
 import application.model.Ticket;
@@ -23,7 +27,7 @@ import application.model.User;
 /**
  * @author gresehyseni
  * 
- *         Final Project - 12/05/2017
+ *         Final Project - 12/04/2017
  * 
  *         Connects with TicketView and Ticket Model, by interacting with both.
  */
@@ -313,13 +317,22 @@ public class TicketController {
 	 */
 	@FXML
 	private void deleteTicket(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-		try {
-			TicketDAO.deleteTicketWithId(ticketIdText.getText());
-			System.out.println("Ticket deleted! Ticket id: " + ticketIdText.getText() + "\n");
-		} catch (SQLException e) {
-			System.out.println("Problem while deleting ticket " + e);
-			throw e;
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Delete ticket.");
+		alert.setHeaderText("Click OK to confirm you want to delete this ticket.");
+		
+		Optional<ButtonType> answer = alert.showAndWait();
+		if (answer.get() == ButtonType.OK){
+			try {
+				TicketDAO.deleteTicketWithId(ticketIdText.getText());
+				System.out.println("Ticket deleted! Ticket id: " + ticketIdText.getText() + "\n");
+			} catch (SQLException e) {
+				System.out.println("Problem with deleting ticket! " + e);
+				throw e;
+			}
 		}
+		
+	
 	}
 
 }

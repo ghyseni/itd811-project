@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
@@ -18,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -30,6 +32,7 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import application.Login;
 import application.model.Task;
@@ -289,12 +292,19 @@ public class TasksController {
 	 */
 	@FXML
 	private void deleteTask(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-		try {
-			TaskDAO.deleteTaskWithId(taskIdText.getText());
-			System.out.println("Task deleted! Task id: " + taskIdText.getText() + "\n");
-		} catch (SQLException e) {
-			System.out.println("Problem while deleting task " + e);
-			throw e;
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Delete task.");
+		alert.setHeaderText("Click OK to confirm you want to delete this task.");
+
+		Optional<ButtonType> answer = alert.showAndWait();
+		if (answer.get() == ButtonType.OK) {
+			try {
+				TaskDAO.deleteTaskWithId(taskIdText.getText());
+				System.out.println("Task deleted! Task id: " + taskIdText.getText() + "\n");
+			} catch (SQLException e) {
+				System.out.println("Problem while deleting task " + e);
+				throw e;
+			}
 		}
 	}
 

@@ -14,7 +14,7 @@ import javafx.scene.control.*;
 /**
  * @author gresehyseni
  * 
- *         Final Project - 12/04/2017
+ *         Final Project - 12/01/2017
  * 
  *         Controls the login view. Connecting to database for user
  *         authentication.

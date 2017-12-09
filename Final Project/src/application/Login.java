@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 /**
  * @author gresehyseni
  * 
- *         Final Project - 12/05/2017
+ *         Final Project - 12/01/2017
  * 
  *         Start application, providing methods to show different views.
  */
@@ -43,14 +43,14 @@ public class Login extends Application {
 	@Override
 	public void start(Stage stage) throws IOException {
 		
-		TicketDAO.createTable();
-		UserDAO.createTable();
-		UserDAO.InsertUsers();
-		TaskDAO.createTable();
+//		TicketDAO.createTable();
+//		UserDAO.createTable();
+//		UserDAO.InsertUsers();
+//		TaskDAO.createTable();
 		
 		scene = new Scene(new StackPane());
 		this.stage = stage;
-		showLoginView();
+		showLoginView(); 
 
 		stage.setScene(scene);
 		stage.setTitle("Trouble Ticket System - Login");
