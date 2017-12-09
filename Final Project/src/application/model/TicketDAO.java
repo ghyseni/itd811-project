@@ -34,7 +34,7 @@ public class TicketDAO {
 
 		// Execute CREATE statement
 		try {
-			DBUtil.dbExecuteUpdate(createTableStmt);
+			DBUtil.executeUpdate(createTableStmt);
 		} catch (SQLException e) {
 			System.out.println("While creating table tickets, error occured." + e);
 		} catch (ClassNotFoundException e) {
@@ -62,7 +62,7 @@ public class TicketDAO {
 
 		// Execute SELECT statement
 		try {
-			ResultSet rsTicket = DBUtil.dbExecuteQuery(selectStmt);
+			ResultSet rsTicket = DBUtil.executeQuery(selectStmt);
 			Ticket ticket = getTicketFromResultSet(rsTicket);
 			return ticket;
 		} catch (SQLException e) {
@@ -122,7 +122,7 @@ public class TicketDAO {
 
 		// Execute SELECT statement
 		try {
-			ResultSet rsTickets = DBUtil.dbExecuteQuery(selectStmt);
+			ResultSet rsTickets = DBUtil.executeQuery(selectStmt);
 			ObservableList<Ticket> ticketList = getTicketList(rsTickets);
 			return ticketList;
 		} catch (SQLException e) {
@@ -158,7 +158,7 @@ public class TicketDAO {
 
 		// Execute SELECT statement
 		try {
-			ResultSet rsTickets = DBUtil.dbExecuteQuery(selectStmt);
+			ResultSet rsTickets = DBUtil.executeQuery(selectStmt);
 			ObservableList<Ticket> ticketList = getTicketList(rsTickets);
 			return ticketList;
 		} catch (SQLException e) {
@@ -220,7 +220,7 @@ public class TicketDAO {
 
 		// Execute UPDATE operation
 		try {
-			DBUtil.dbExecuteUpdate(updateStmt);
+			DBUtil.executeUpdate(updateStmt);
 		} catch (SQLException e) {
 			System.out.print("Error while UPDATE ticket name: " + e);
 			throw e;
@@ -240,7 +240,7 @@ public class TicketDAO {
 
 		// Execute UPDATE operation
 		try {
-			DBUtil.dbExecuteUpdate(updateStmt);
+			DBUtil.executeUpdate(updateStmt);
 		} catch (SQLException e) {
 			System.out.print("Error while DELETE ticket: " + e);
 			throw e;
@@ -268,7 +268,7 @@ public class TicketDAO {
 		System.out.println(updateStmt);
 		// Execute DELETE operation
 		try {
-			DBUtil.dbExecuteUpdate(updateStmt);
+			DBUtil.executeUpdate(updateStmt);
 		} catch (SQLException e) {
 			System.out.print("Error while insert Ticket: " + e);
 			throw e;

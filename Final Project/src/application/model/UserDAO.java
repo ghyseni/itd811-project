@@ -28,7 +28,7 @@ public class UserDAO {
 
 		// Execute CREATE statement
 		try {
-			DBUtil.dbExecuteUpdate(createTableStmt);
+			DBUtil.executeUpdate(createTableStmt);
 		} catch (SQLException e) {
 			System.out.println("While creating table users, error occured." + e);
 		} catch (ClassNotFoundException e) {
@@ -53,7 +53,7 @@ public class UserDAO {
 
 		// Execute CREATE statement
 		try {
-			DBUtil.dbExecuteUpdate(insertStmt);
+			DBUtil.executeUpdate(insertStmt);
 		} catch (SQLException e) {
 			System.out.println("While  inserting users, error occured." + e);
 		} catch (ClassNotFoundException e) {
@@ -76,8 +76,8 @@ public class UserDAO {
 
 		// Execute SELECT statement
 		try {
-			// Get ResultSet from dbExecuteQuery method
-			ResultSet rs = DBUtil.dbExecuteQuery(selectStmt);
+			// Get ResultSet from executeQuery method
+			ResultSet rs = DBUtil.executeQuery(selectStmt);
 
 			// Send ResultSet to the getUserFromResultSet method and get user object
 			User user = getUserFromResultSet(rs);
@@ -107,7 +107,7 @@ public class UserDAO {
 
 		// Execute SELECT statement
 		try {
-			ResultSet rsUser = DBUtil.dbExecuteQuery(selectStmt);
+			ResultSet rsUser = DBUtil.executeQuery(selectStmt);
 			User user = getUserFromResultSet(rsUser);
 			return user;
 		} catch (SQLException e) {
@@ -149,7 +149,7 @@ public class UserDAO {
 
 		// Execute SELECT statement
 		try {
-			ResultSet rsUsers = DBUtil.dbExecuteQuery(selectStmt);
+			ResultSet rsUsers = DBUtil.executeQuery(selectStmt);
 			ObservableList<User> userList = getUserList(rsUsers);
 			return userList;
 		} catch (SQLException e) {
@@ -202,7 +202,7 @@ public class UserDAO {
 
 		// Execute UPDATE operation
 		try {
-			DBUtil.dbExecuteUpdate(updateStmt);
+			DBUtil.executeUpdate(updateStmt);
 		} catch (SQLException e) {
 			System.out.print("Error while UPDATE Operation: " + e);
 			throw e;
@@ -222,7 +222,7 @@ public class UserDAO {
 
 		// Execute UPDATE operation
 		try {
-			DBUtil.dbExecuteUpdate(updateStmt);
+			DBUtil.executeUpdate(updateStmt);
 		} catch (SQLException e) {
 			System.out.print("Error while DELETE Operation: " + e);
 			throw e;
@@ -248,7 +248,7 @@ public class UserDAO {
 
 		// Execute DELETE operation
 		try {
-			DBUtil.dbExecuteUpdate(updateStmt);
+			DBUtil.executeUpdate(updateStmt);
 		} catch (SQLException e) {
 			System.out.print("Error while Insert Operation: " + e);
 			throw e;

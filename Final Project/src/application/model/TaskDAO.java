@@ -32,7 +32,7 @@ public class TaskDAO {
 
 		// Execute CREATE statement
 		try {
-			DBUtil.dbExecuteUpdate(createTableStmt);
+			DBUtil.executeUpdate(createTableStmt);
 		} catch (SQLException e) {
 			System.out.println("While creating table tasks, error occured." + e);
 		} catch (ClassNotFoundException e) {
@@ -56,7 +56,7 @@ public class TaskDAO {
 
 		// Execute SELECT statement
 		try {
-			ResultSet rsTask = DBUtil.dbExecuteQuery(selectStmt);
+			ResultSet rsTask = DBUtil.executeQuery(selectStmt);
 			Task task = getTaskFromResultSet(rsTask);
 			return task;
 		} catch (SQLException e) {
@@ -116,7 +116,7 @@ public class TaskDAO {
 		// Execute SELECT statement
 		try {
 
-			ResultSet rsTasks = DBUtil.dbExecuteQuery(selectStmt);
+			ResultSet rsTasks = DBUtil.executeQuery(selectStmt);
 			ObservableList<Task> taskList = getTaskList(rsTasks);
 			return taskList;
 		} catch (SQLException e) {
@@ -172,7 +172,7 @@ public class TaskDAO {
 
 		// Execute operation UPDATE
 		try {
-			DBUtil.dbExecuteUpdate(updateStmt);
+			DBUtil.executeUpdate(updateStmt);
 		} catch (SQLException e) {
 			System.out.print("Error while UPDATE task name: " + e);
 			throw e;
@@ -192,7 +192,7 @@ public class TaskDAO {
 
 		// Execute operation UPDATE
 		try {
-			DBUtil.dbExecuteUpdate(updateStmt);
+			DBUtil.executeUpdate(updateStmt);
 		} catch (SQLException e) {
 			System.out.print("Error while DELETE task: " + e);
 			throw e;
@@ -217,7 +217,7 @@ public class TaskDAO {
 		System.out.println(updateStmt);
 		// Execute operation DELETE
 		try {
-			DBUtil.dbExecuteUpdate(updateStmt);
+			DBUtil.executeUpdate(updateStmt);
 		} catch (SQLException e) {
 			System.out.print("Error while insert Task: " + e);
 			throw e;

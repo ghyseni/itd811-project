@@ -26,7 +26,7 @@ public class DBUtil {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public static void dbConnect() throws SQLException, ClassNotFoundException {
+	public static void connect() throws SQLException, ClassNotFoundException {
 		// JDBC Driver
 		try {
 			Class.forName(JDBC_DRIVER);
@@ -50,7 +50,7 @@ public class DBUtil {
 	 * Close Connection
 	 * @throws SQLException
 	 */
-	public static void dbDisconnect() throws SQLException {
+	public static void disconnect() throws SQLException {
 		try {
 			if (conn != null && !conn.isClosed()) {
 				conn.close();
@@ -67,11 +67,11 @@ public class DBUtil {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public static ResultSet dbExecuteQuery(String stm) throws SQLException, ClassNotFoundException {
+	public static ResultSet executeQuery(String stm) throws SQLException, ClassNotFoundException {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			dbConnect();
+			connect();
 			System.out.println("Statement: " + stm);
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(stm);
@@ -88,10 +88,10 @@ public class DBUtil {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public static void dbExecuteUpdate(String stm) throws SQLException, ClassNotFoundException {
+	public static void executeUpdate(String stm) throws SQLException, ClassNotFoundException {
 		Statement stmt = null;
 		try {
-			dbConnect();
+			connect();
 			stmt = conn.createStatement();
 			stmt.executeUpdate(stm);
 			System.out.println("Statement: " + stm);
@@ -102,7 +102,7 @@ public class DBUtil {
 			if (stmt != null) {
 				stmt.close();
 			}
-			dbDisconnect();
+			disconnect();
 		}
 	}
 }

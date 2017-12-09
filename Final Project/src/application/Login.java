@@ -36,7 +36,6 @@ public class Login extends Application {
 	private BorderPane rootLayout;
 	
 
-
 	public static void main(String[] args) {	
 		launch(args);
 	}
