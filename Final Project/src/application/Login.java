@@ -4,7 +4,9 @@ import application.controller.LoginController;
 import application.controller.ProfileController;
 import application.controller.RootLayoutController;
 import application.controller.TicketController;
+import application.controller.TasksController;
 import application.controller.UserController;
+import application.model.Ticket;
 import application.model.User;
 
 import java.io.IOException;
@@ -137,20 +139,20 @@ public class Login extends Application {
 		}
 	}
 	
-//	/**
-//	 * Shows the person overview inside the root layout.
-//	 */
-//	public void showTasksView(User user, Ticket ticket) {
-//		try {
-//			// Load person overview.
-//			FXMLLoader loader = new FXMLLoader();
-//			loader.setLocation(Login.class.getResource("view/TasksView.fxml"));
-//			AnchorPane userView = (AnchorPane) loader.load();
-//			rootLayout.setCenter(userView);
-//			UserController controller = loader.<UserController>getController();
-//			controller.init(this, user);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	/**
+	 * Shows the person overview inside the root layout.
+	 */
+	public void showOpenTicketView(User user, Ticket ticket) {  
+		try {
+			// Load person overview.
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Login.class.getResource("view/TasksView.fxml"));
+			AnchorPane ticketOpenView = (AnchorPane) loader.load();
+			rootLayout.setCenter(ticketOpenView);
+			TasksController controller = loader.<TasksController>getController();
+			controller.init(this, user, ticket);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

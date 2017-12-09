@@ -9,7 +9,7 @@
     <TextField fx:id="ticketIdText" layoutX="233.0" layoutY="41.0" prefHeight="25.0" prefWidth="67.0" promptText="Ticket ID" />
       <Label layoutX="234.0" layoutY="21.0" text="Ticket ID" />
       <Button fx:id="searchTicketBtn" layoutX="234.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchTicket" prefHeight="25.0" prefWidth="56.0" text="Search" />
-       <Button fx:id="addTasksBtn" layoutX="294.0" layoutY="70.0" mnemonicParsing="false" onAction="#addTasks" prefHeight="25.0" prefWidth="56.0" text="Add tasks" />
+       <Button fx:id="openTicketBtn" visible="false" layoutX="294.0" layoutY="70.0" mnemonicParsing="false" prefHeight="25.0" text="Ticket Tasks" />
       
       <Button fx:id="addTicketBtn" layoutX="97.0" layoutY="237.0" mnemonicParsing="false" onAction="#insertTicket" text="Add Ticket" />
       <Button fx:id="updateTicketBtn" visible="false" layoutX="97.0" layoutY="207.0" mnemonicParsing="false" onAction="#updateTicket" prefHeight="25.0" prefWidth="56.0" text="Update" />
@@ -22,13 +22,14 @@
             <TextArea fx:id="ticketDescriptionTextArea" prefHeight="60.0" prefWidth="120.0" promptText="Description" />            
 		    <ComboBox fx:id="departmentCombo" prefHeight="25.0" prefWidth="120.0" promptText="Department"/>
             <TextField fx:id="ticketIssuerText" prefHeight="25.0" prefWidth="120.0" promptText="Issuer" />
-            <ComboBox fx:id="statusCombo" prefHeight="25.0" prefWidth="120.0" promptText="Status" value=""/>
+            <ComboBox fx:id="statusCombo" prefHeight="25.0" prefWidth="120.0" promptText="Status" value="Open"/>
          </children>
       </VBox>
       <VBox layoutX="9.0" layoutY="28.0" prefWidth="67.0" spacing="12.0">
          <children>
             <Label text="Ticketname" />
             <Label text="Description" />
+            <Label text="" /> 
             <Label text="Department" />
             <Label text="Issuer" /> 
             <Label text="Status" />      
@@ -43,7 +44,7 @@
           <TableColumn fx:id="ticketDescriptionColumn" prefWidth="120.0" text="Description" />
            <TableColumn fx:id="ticketDepartmentColumn" prefWidth="73.0" text="Department" />
             <TableColumn fx:id="ticketIssuerColumn" prefWidth="73.0" text="Issuer" />
-             <TableColumn fx:id="ticketUserIdColumn" prefWidth="73.0" text="User Id" />
+             <TableColumn fx:id="ticketUsernameColumn" prefWidth="73.0" text="Username" />
              <TableColumn fx:id="ticketStatusColumn" prefWidth="73.0" text="Status" />
               <TableColumn fx:id="ticketCreatedAtColumn" prefWidth="73.0" text="Created at" />
                <TableColumn fx:id="ticketUpdatedAtColumn" prefWidth="73.0" text="Updated at" />

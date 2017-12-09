@@ -5,30 +5,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 import application.Login;
@@ -75,6 +59,8 @@ public class TicketController {
 	private Button deleteTicketBtn;
 	@FXML
 	private Button closeTicketBtn;
+	@FXML
+	private Button openTicketBtn;
 
 	// Table
 	@FXML
@@ -88,7 +74,7 @@ public class TicketController {
 	@FXML
 	private TableColumn<Ticket, String> ticketDepartmentColumn;
 	@FXML
-	private TableColumn<Ticket, Integer> ticketUserIdColumn;
+	private TableColumn<Ticket, String> ticketUsernameColumn;
 	@FXML
 	private TableColumn<Ticket, String> ticketIssuerColumn;
 	@FXML
@@ -150,11 +136,11 @@ public class TicketController {
 		ticketNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 		ticketDescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 		ticketDepartmentColumn.setCellValueFactory(cellData -> cellData.getValue().departmentProperty());
-		ticketUserIdColumn.setCellValueFactory(cellData -> cellData.getValue().userIdProperty().asObject());
+		ticketUsernameColumn.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
 		ticketIssuerColumn.setCellValueFactory(cellData -> cellData.getValue().issuerProperty());
-		ticketStatusColumn.setCellValueFactory(cellData -> cellData.getValue().issuerProperty());
-		ticketCreatedAtColumn.setCellValueFactory(cellData -> cellData.getValue().issuerProperty());
-		ticketUpdatedAtColumn.setCellValueFactory(cellData -> cellData.getValue().issuerProperty());
+		ticketStatusColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+		ticketCreatedAtColumn.setCellValueFactory(cellData -> cellData.getValue().createdAtProperty());
+		ticketUpdatedAtColumn.setCellValueFactory(cellData -> cellData.getValue().updatedAtProperty());
 
 		// fill department combo box with item choices.
 		ObservableList<String> departments = FXCollections.observableArrayList();
@@ -176,6 +162,28 @@ public class TicketController {
 		ticketTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			fillTicketFormInputs(newSelection);
 			updateTicketBtn.setVisible(true);
+			openTicketBtn.setVisible(true);
+		});
+
+		// Add action to show open ticket btn
+		openTicketBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					// Get Ticket information
+					Ticket ticket = TicketDAO.searchTicket(ticketIdText.getText());
+					System.out.println(ticket);
+					// Open ticket screen
+					login.showOpenTicketView(user, ticket);
+				} catch (SQLException e) {
+					e.printStackTrace();
+					System.out.println("Error occurred while getting ticket information from DB.\n" + e);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Error occurred while getting ticket information from DB.\n" + e);
+				}
+			}
 		});
 	}
 
@@ -188,6 +196,7 @@ public class TicketController {
 			ticketDescriptionTextArea.setText(ticket.getDescription());
 			departmentCombo.setValue(ticket.getDepartment());
 			ticketIssuerText.setText(ticket.getIssuer());
+			statusCombo.setValue(ticket.getStatus());
 		}
 	}
 
@@ -258,20 +267,4 @@ public class TicketController {
 		}
 	}
 
-//	// Help Menu button behavior
-//	@FXML
-//	public void addTasks(ActionEvent actionEvent) throws IOException {
-//	
-//	        final FXMLLoader loader = new FXMLLoader(Login.class.getResource("view/DialogRootLayout.fxml"));
-//	        final Parent root =  (BorderPane) loader.load();
-//	        DialogRootLayoutController controller = loader.<DialogRootLayoutController>getController();
-//			controller.initialize(user);
-//	        final Scene scene = new Scene(root, 250, 150);
-//	        Stage stage = new Stage();
-//	        stage.initModality(Modality.APPLICATION_MODAL);
-//	        stage.initStyle(StageStyle.UNDECORATED);
-//	        stage.setScene(scene);
-//	        stage.show();
-//
-//	}
 }

@@ -117,7 +117,7 @@ public class UserDAO {
 	}
 
 	// *************************************
-	// UPDATE a user name
+	// UPDATE a user
 	// *************************************
 	public static void updateUser(int userId, String username, String password, String firstName, String lastName,
 			String role) throws SQLException, ClassNotFoundException {

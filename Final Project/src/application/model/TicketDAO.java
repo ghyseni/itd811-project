@@ -1,5 +1,6 @@
 package application.model;
 
+import java.io.Console;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -47,7 +48,10 @@ public class TicketDAO {
 			ticket.setDepartment(rs.getString("department"));
 			ticket.setIssuer(rs.getString("issuer"));
 			ticket.setUserId(rs.getInt("user_id"));
-			ticket.setIssuer(rs.getString("status"));
+			ticket.setUsername(rs.getString("username"));
+			ticket.setStatus(rs.getString("status"));
+			ticket.setCreatedAt(rs.getTimestamp("created_at").toString());
+			ticket.setUpdatedAt(rs.getTimestamp("updated_at").toString());
 		}
 		return ticket;
 	}
@@ -59,7 +63,7 @@ public class TicketDAO {
 			throws SQLException, ClassNotFoundException {
 
 		if (status==null || status.isEmpty()) {
-			status = "Open";
+			status = "%";
 		}
 		if (keyword.isEmpty()) {
 			keyword = "%";
@@ -67,8 +71,8 @@ public class TicketDAO {
 			keyword = "%"+keyword+"%";
 		}
 		// Declare a SELECT statement
-		String selectStmt = "SELECT * FROM tickets WHERE (name LIKE '" + keyword + "' OR description LIKE '" + keyword
-				+ "') AND status='" + status + "'";
+		String selectStmt = "SELECT * FROM tickets INNER JOIN users ON tickets.user_id=users.user_id WHERE (name LIKE '" + keyword + "' OR description LIKE '" + keyword
+				+ "') AND status LIKE '" + status + "'";
 
 		// Execute SELECT statement
 		try {
@@ -124,7 +128,7 @@ public class TicketDAO {
 
 	// Select * from tickets
 	private static ObservableList<Ticket> getTicketList(ResultSet rs) throws SQLException, ClassNotFoundException {
-		// Declare a observable List which comprises of Ticket objects
+
 		ObservableList<Ticket> userList = FXCollections.observableArrayList();
 
 		while (rs.next()) {
@@ -134,17 +138,19 @@ public class TicketDAO {
 			ticket.setDescription(rs.getString("description"));
 			ticket.setDepartment(rs.getString("department"));
 			ticket.setUserId(rs.getInt("user_id"));
+			ticket.setUsername(rs.getString("username"));
 			ticket.setIssuer(rs.getString("issuer"));
-			ticket.setIssuer(rs.getString("status"));
-			// Add ticket to the ObservableList
+			ticket.setStatus(rs.getString("status"));
+			ticket.setCreatedAt(rs.getTimestamp("created_at").toString());
+			ticket.setUpdatedAt(rs.getTimestamp("updated_at").toString());
+			
 			userList.add(ticket);
 		}
-		// return userList (ObservableList of Tickets)
 		return userList;
 	}
 
 	// *************************************
-	// UPDATE a ticket name
+	// UPDATE a ticket
 	// *************************************
 	public static void updateTicket(String ticketId, String ticketName, String ticketDescription,
 			String ticketDepartment, String issuer, int userId, String status)
@@ -159,24 +165,6 @@ public class TicketDAO {
 			DBUtil.dbExecuteUpdate(updateStmt);
 		} catch (SQLException e) {
 			System.out.print("Error occurred while UPDATE ticket name: " + e);
-			throw e;
-		}
-	}
-
-	// *************************************
-	// UPDATE a ticket description
-	// *************************************
-	public static void updateTicketDescription(String ticketId, String ticketDescription)
-			throws SQLException, ClassNotFoundException {
-		// Declare a UPDATE statement
-		String updateStmt = "UPDATE tickets SET description = '" + ticketDescription + "' WHERE ticket_id = "
-				+ ticketId;
-
-		// Execute UPDATE operation
-		try {
-			DBUtil.dbExecuteUpdate(updateStmt);
-		} catch (SQLException e) {
-			System.out.print("Error occurred while UPDATE ticket description: " + e);
 			throw e;
 		}
 	}

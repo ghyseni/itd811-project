@@ -90,9 +90,11 @@ public class ProfileController {
 		
 		// Set each input field value
 		if (user != null) {
+			userIdText.setText(Integer.toString(user.getUserId()));
 			userNameText.setText(user.getUsername());
 			firstNameText.setText(user.getFirstName());
 			lastNameText.setText(user.getLastName());
+			roleCombo.setValue(user.getRole());
 		}
 	}
 

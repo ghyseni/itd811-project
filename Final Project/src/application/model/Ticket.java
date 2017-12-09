@@ -7,8 +7,12 @@ public class Ticket {
 	private StringProperty name;
 	private StringProperty description;
 	private StringProperty department;
-	private IntegerProperty userId;
 	private StringProperty issuer;
+	private StringProperty status;
+	private StringProperty createdAt;
+	private StringProperty updatedAt;
+	private StringProperty username;
+	private IntegerProperty userId;
 
 	// Constructor
 	public Ticket() {
@@ -16,8 +20,12 @@ public class Ticket {
 		this.name = new SimpleStringProperty();
 		this.description = new SimpleStringProperty();
 		this.department = new SimpleStringProperty();
-		this.issuer = new SimpleStringProperty();
+		this.issuer = new SimpleStringProperty();		
+		this.status = new SimpleStringProperty();
+		this.createdAt = new SimpleStringProperty();
+		this.updatedAt = new SimpleStringProperty();
 		this.userId = new SimpleIntegerProperty();
+		this.username = new SimpleStringProperty();
 	}
 
 	// ticketId
@@ -98,4 +106,54 @@ public class Ticket {
 		return issuer;
 	}
 
+	// createdAt
+	public String getCreatedAt() {
+		return createdAt.get();
+	}
+
+	public void setCreatedAt(String createdAt) {
+		this.createdAt.set(createdAt);
+	}
+
+	public StringProperty createdAtProperty() {
+		return createdAt;
+	}
+	// updatedAt
+	public String getUpdatedAt() {
+		return updatedAt.get();
+	}
+
+	public void setUpdatedAt(String updatedAt) {
+		this.updatedAt.set(updatedAt);
+	}
+
+	public StringProperty updatedAtProperty() {
+		return updatedAt;
+	}
+	
+	// status
+	public String getStatus() {
+		return status.get();
+	}
+
+	public void setStatus(String status) {
+		this.status.set(status);
+	}
+
+	public StringProperty statusProperty() {
+		return status;
+	}
+	
+	// username
+	public String getUsername() {
+		return username.get();
+	}
+
+	public void setUsername(String username) {
+		this.username.set(username);
+	}
+
+	public StringProperty usernameProperty() {
+		return username;
+	}
 }
