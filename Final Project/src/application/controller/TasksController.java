@@ -37,9 +37,15 @@ import application.model.TaskDAO;
 import application.model.Ticket;
 import application.model.User;
 
+/**
+ * @author gresehyseni
+ * 
+ *         Final Project - 12/05/2017
+ * 
+ *         Connects with TasksView and Tasks Model, by interacting with both.
+ */
 public class TasksController {
 
-	private User user;
 	private Ticket ticket;
 
 	// AnchorPane
@@ -94,7 +100,13 @@ public class TasksController {
 	@FXML
 	private TableColumn<Task, String> taskUpdatedAtColumn;
 
-	// Search an task
+	/**
+	 * Search task by taskID
+	 * 
+	 * @param actionEvent
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	@FXML
 	private void searchTask(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
 		System.out.println(actionEvent);
@@ -105,12 +117,18 @@ public class TasksController {
 			fillAndShowTask(task);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error occurred while getting task information from DB.\n" + e);
+			System.out.println("Error while getting task information from DB.\n" + e);
 			throw e;
 		}
 	}
 
-	// Search all tasks
+	/**
+	 * Search tasks by keyword, status, ticketId
+	 * 
+	 * @param actionEvent
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	@FXML
 	private void searchTasks(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
@@ -122,21 +140,27 @@ public class TasksController {
 			// Fill Tasks on TableView
 			fillTasks(taskData);
 		} catch (SQLException e) {
-			System.out.println("Error occurred while getting tasks information from DB.\n" + e);
+			System.out.println("Error while getting tasks information from DB.\n" + e);
 			throw e;
 		}
 	}
 
-	// Called after fxml load
+	/**
+	 * Called after fxml load
+	 */
 	@FXML
 	public void initialize() {
-
 	}
 
-	// Initializing controller class.
+	/**
+	 * Initialize controller
+	 * 
+	 * @param login
+	 * @param user
+	 * @param ticket
+	 */
 	public void init(final Login login, User user, Ticket ticket) {
 
-		this.user = user;
 		this.ticket = ticket;
 
 		taskIdColumn.setCellValueFactory(cellData -> cellData.getValue().taskIdProperty().asObject());
@@ -163,7 +187,11 @@ public class TasksController {
 		});
 	}
 
-	// Fill Task Form Inputs For Update
+	/**
+	 * Fill Task Form Inputs For Update
+	 * 
+	 * @param task
+	 */
 	private void fillTaskFormInputs(Task task) {
 		// Set each input field value
 		if (task != null) {
@@ -175,17 +203,24 @@ public class TasksController {
 		}
 	}
 
-	// Fill Task
+	/**
+	 * Fill task
+	 * 
+	 * @param task
+	 * @throws ClassNotFoundException
+	 */
 	private void fillTask(Task task) throws ClassNotFoundException {
-		// Declare and ObservableList for table view
 		ObservableList<Task> taskData = FXCollections.observableArrayList();
-		// Add task to the ObservableList
 		taskData.add(task);
-		// Set items to the taskTable
 		taskTable.setItems(taskData);
 	}
 
-	// Fill Task for TableView and Display Task on TextArea
+	/**
+	 * Fill Task for TableView and Display Task on TextArea
+	 * 
+	 * @param task
+	 * @throws ClassNotFoundException
+	 */
 	private void fillAndShowTask(Task task) throws ClassNotFoundException {
 		if (task != null) {
 			fillTask(task);
@@ -194,13 +229,24 @@ public class TasksController {
 		}
 	}
 
-	// Fill Tasks for TableView
+	/**
+	 * Fill Tasks for TableView
+	 * 
+	 * @param taskData
+	 * @throws ClassNotFoundException
+	 */
 	private void fillTasks(ObservableList<Task> taskData) throws ClassNotFoundException {
 		// Set items to the taskTable
 		taskTable.setItems(taskData);
 	}
 
-	// Update task's email with the email which is written on newEmailText field
+	/**
+	 * Update task
+	 * 
+	 * @param actionEvent
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	@FXML
 	private void updateTask(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
@@ -211,31 +257,43 @@ public class TasksController {
 
 			System.out.println("Task has been updated for, task id: " + taskIdText.getText() + "\n");
 		} catch (SQLException e) {
-			System.out.println("Problem occurred while updating task name: " + e);
+			System.out.println("Problem while updating task name: " + e);
 		}
 	}
 
-	// Insert an task to the DB
+	/**
+	 * Insert task to the DB
+	 * 
+	 * @param actionEvent
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	@FXML
 	private void insertTask(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
 			TaskDAO.insertTask(taskNameText.getText(), taskDescriptionTextArea.getText(), assignedToText.getText(),
-					statusCombo.getValue().toString(),ticket.getTicketId());
+					statusCombo.getValue().toString(), ticket.getTicketId());
 			System.out.println("Task inserted! \n");
 		} catch (SQLException e) {
-			System.out.println("Problem occurred while inserting task " + e);
+			System.out.println("Problem while inserting task " + e);
 			throw e;
 		}
 	}
 
-	// Delete an task with a given task Id from DB
+	/**
+	 * Delete an task by Id from DB
+	 * 
+	 * @param actionEvent
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	@FXML
 	private void deleteTask(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
 			TaskDAO.deleteTaskWithId(taskIdText.getText());
 			System.out.println("Task deleted! Task id: " + taskIdText.getText() + "\n");
 		} catch (SQLException e) {
-			System.out.println("Problem occurred while deleting task " + e);
+			System.out.println("Problem while deleting task " + e);
 			throw e;
 		}
 	}

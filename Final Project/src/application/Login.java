@@ -20,7 +20,13 @@ import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-/** Main application class for the login demo application */
+/**
+ * @author gresehyseni
+ * 
+ *         Final Project - 12/05/2017
+ * 
+ *         Start application, providing methods to show different views.
+ */
 public class Login extends Application {
 	private Scene scene;
 	private Stage stage;
@@ -42,33 +48,44 @@ public class Login extends Application {
 	}
 
 	/**
-	 * Callback method invoked to notify that a user has been authenticated. Will
-	 * show the main application screen.
+	 * Method will be called after user authenticated. Shows main window.
+	 * 
+	 * @param user
+	 * @param sessionID
 	 */
 	public void authenticate(User user, String sessionID) {
 		showMainView(user, sessionID);
 	}
 
 	/**
-	 * Callback method invoked to notify that a user has logged out of the main
-	 * application. Will show the login application screen.
+	 * Method will be called after user is logged out, opens login window.
 	 */
 	public void logout() {
 		showLoginView();
 	}
 
+	/**
+	 * Open Login view
+	 */
 	public void showLoginView() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Login.class.getResource("view/Login.fxml"));
 			scene.setRoot((Parent) loader.load());
 			LoginController controller = loader.<LoginController>getController();
-			controller.initManager(this);
+			controller.init(this);
+			stage.sizeToScene();
 		} catch (IOException ex) {
 			Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 
+	/**
+	 * Open root layout, where other views are going to be set in.
+	 * 
+	 * @param user
+	 * @param sessionID
+	 */
 	public void showMainView(User user, String sessionID) {
 		try {
 
@@ -88,8 +105,11 @@ public class Login extends Application {
 		}
 	}
 
+
 	/**
 	 * Shows ticket view inside root layout.
+	 * 
+	 * @param user
 	 */
 	public void showTicketView(User user) {
 		try {
@@ -100,16 +120,19 @@ public class Login extends Application {
 			rootLayout.setCenter(ticketView);
 			TicketController controller = loader.<TicketController>getController();
 			controller.init(this, user);
-			
+
 			stage.setTitle("Trouble Ticket System - Tickets");
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+
 	/**
 	 * Shows profile view inside root layout.
+	 * 
+	 * @param user
 	 */
 	public void showProfile(User user) {
 		try {
@@ -120,7 +143,7 @@ public class Login extends Application {
 			rootLayout.setCenter(profileView);
 			ProfileController controller = loader.<ProfileController>getController();
 			controller.init(this, user);
-			
+
 			stage.setTitle("Trouble Ticket System - Profile");
 
 		} catch (IOException e) {
@@ -128,8 +151,11 @@ public class Login extends Application {
 		}
 	}
 
+
 	/**
 	 * Shows user view inside root layout.
+	 * 
+	 * @param user
 	 */
 	public void showUserView(User user) {
 		try {
@@ -140,18 +166,22 @@ public class Login extends Application {
 			rootLayout.setCenter(userView);
 			UserController controller = loader.<UserController>getController();
 			controller.init(this, user);
-			
+
 			stage.setTitle("Trouble Ticket System - Users");
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+
 	/**
 	 * Shows tasks view inside root layout.
+	 * 
+	 * @param user
+	 * @param ticket
 	 */
-	public void showOpenTicketView(User user, Ticket ticket) {  
+	public void showOpenTicketView(User user, Ticket ticket) {
 		try {
 			// Load person overview.
 			FXMLLoader loader = new FXMLLoader();
@@ -160,9 +190,9 @@ public class Login extends Application {
 			rootLayout.setCenter(ticketOpenView);
 			TasksController controller = loader.<TasksController>getController();
 			controller.init(this, user, ticket);
-			
+
 			stage.setTitle("Trouble Ticket System - Tasks");
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

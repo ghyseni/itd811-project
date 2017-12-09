@@ -20,6 +20,13 @@ import application.model.Ticket;
 import application.model.TicketDAO;
 import application.model.User;
 
+/**
+ * @author gresehyseni
+ * 
+ *         Final Project - 12/05/2017
+ * 
+ *         Connects with TicketView and Ticket Model, by interacting with both.
+ */
 public class TicketController {
 
 	private User user;
@@ -84,7 +91,13 @@ public class TicketController {
 	@FXML
 	private TableColumn<Ticket, String> ticketUpdatedAtColumn;
 
-	// Search an ticket
+	/**
+	 * Search one ticket by id
+	 * 
+	 * @param actionEvent
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	@FXML
 	private void searchTicket(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
 		try {
@@ -99,7 +112,13 @@ public class TicketController {
 		}
 	}
 
-	// Search all tickets
+	/**
+	 * Search all tickets by keyword, userid, status
+	 * 
+	 * @param actionEvent
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	@FXML
 	private void searchTickets(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
@@ -107,8 +126,8 @@ public class TicketController {
 			ObservableList<Ticket> ticketData = null;
 			String keyword = ticketKeywordText.getText();
 			String status = searchStatusCombo.getValue();
-			
-			 if (user.getRole().equals("admin")) {
+
+			if (user.getRole().equals("admin")) {
 				ticketData = TicketDAO.searchTickets(keyword, status);
 			} else {
 				ticketData = TicketDAO.searchTickets(keyword, status, user.getUserId());
@@ -116,18 +135,24 @@ public class TicketController {
 			// Fill Tickets on TableView
 			fillTickets(ticketData);
 		} catch (SQLException e) {
-			System.out.println("Error occurred while getting tickets information from DB.\n" + e);
+			System.out.println("Error while getting tickets information from DB.\n" + e);
 			throw e;
 		}
 	}
 
-	// Called after fxml load
+	/**
+	 * Called after fxml load
+	 */
 	@FXML
 	public void initialize() {
-
 	}
 
-	// Initializing controller class.
+	/**
+	 * Initialize controller
+	 * 
+	 * @param login
+	 * @param user
+	 */
 	public void init(final Login login, User user) {
 
 		this.user = user;
@@ -178,16 +203,20 @@ public class TicketController {
 					login.showOpenTicketView(user, ticket);
 				} catch (SQLException e) {
 					e.printStackTrace();
-					System.out.println("Error occurred while getting ticket information from DB.\n" + e);
+					System.out.println("Error while getting ticket information from DB.\n" + e);
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
-					System.out.println("Error occurred while getting ticket information from DB.\n" + e);
+					System.out.println("Error while getting ticket information from DB.\n" + e);
 				}
 			}
 		});
 	}
 
-	// Fill Ticket Form Inputs For Update
+	/**
+	 * Fill Ticket Form Inputs For Update
+	 * 
+	 * @param ticket
+	 */
 	private void fillTicketFormInputs(Ticket ticket) {
 		// Set each input field value
 		if (ticket != null) {
@@ -200,32 +229,48 @@ public class TicketController {
 		}
 	}
 
-	// Fill Ticket
+	/**
+	 * Fill Ticket
+	 * 
+	 * @param ticket
+	 * @throws ClassNotFoundException
+	 */
 	private void fillTicket(Ticket ticket) throws ClassNotFoundException {
-		// Declare and ObservableList for table view
 		ObservableList<Ticket> ticketData = FXCollections.observableArrayList();
-		// Add ticket to the ObservableList
 		ticketData.add(ticket);
-		// Set items to the ticketTable
 		ticketTable.setItems(ticketData);
 	}
 
-	// Fill Ticket for TableView and Display Ticket on TextArea
+	/**
+	 * Fill Ticket for TableView and Display Ticket on TextArea
+	 * 
+	 * @param ticket
+	 * @throws ClassNotFoundException
+	 */
 	private void fillAndShowTicket(Ticket ticket) throws ClassNotFoundException {
 		if (ticket != null) {
 			fillTicket(ticket);
 		} else {
-			System.out.println("This ticket does not exist!\n");
+			System.out.println("Ticket not found in database!");
 		}
 	}
 
-	// Fill Tickets for TableView
+	/**
+	 * Fill Tickets for TableView
+	 * 
+	 * @param ticketData
+	 * @throws ClassNotFoundException
+	 */
 	private void fillTickets(ObservableList<Ticket> ticketData) throws ClassNotFoundException {
-		// Set items to the ticketTable
 		ticketTable.setItems(ticketData);
 	}
 
-	// Update ticket's email with the email which is written on newEmailText field
+	/**
+	 * Update ticket
+	 * @param actionEvent
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	@FXML
 	private void updateTicket(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
@@ -235,34 +280,44 @@ public class TicketController {
 
 			searchTicketsBtn.fire();
 
-			System.out.println("Ticket has been updated for, ticket id: " + ticketIdText.getText() + "\n");
+			System.out.println("Ticket has been updated. Ticket id: " + ticketIdText.getText());
 		} catch (SQLException e) {
-			System.out.println("Problem occurred while updating ticket name: " + e);
+			System.out.println("Problem while updating ticket name: " + e);
 		}
 	}
 
-	// Insert an ticket to the DB
+	/**
+	 * Insert ticket to the DB
+	 * @param actionEvent
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	@FXML
 	private void insertTicket(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
 			TicketDAO.insertTicket(ticketNameText.getText(), ticketDescriptionTextArea.getText(),
 					departmentCombo.getValue().toString(), ticketIssuerText.getText(), user.getUserId(),
 					statusCombo.getValue().toString());
-			System.out.println("Ticket inserted! \n");
+			System.out.println("Ticket inserted!");
 		} catch (SQLException e) {
-			System.out.println("Problem occurred while inserting ticket " + e);
+			System.out.println("Problem while inserting ticket " + e);
 			throw e;
 		}
 	}
 
-	// Delete an ticket with a given ticket Id from DB
+	/**
+	 * Delete ticket by Id from DB
+	 * @param actionEvent
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	@FXML
 	private void deleteTicket(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
 			TicketDAO.deleteTicketWithId(ticketIdText.getText());
 			System.out.println("Ticket deleted! Ticket id: " + ticketIdText.getText() + "\n");
 		} catch (SQLException e) {
-			System.out.println("Problem occurred while deleting ticket " + e);
+			System.out.println("Problem while deleting ticket " + e);
 			throw e;
 		}
 	}

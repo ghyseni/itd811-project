@@ -11,7 +11,14 @@ import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-/** Controls the login screen */
+/**
+ * @author gresehyseni
+ * 
+ *         Final Project - 12/04/2017
+ * 
+ *         Controls the login view. Connecting to database for user
+ *         authentication.
+ */
 public class LoginController {
 
 	private static int sessionID = 0;
@@ -26,25 +33,24 @@ public class LoginController {
 	public void initialize() {
 	}
 
-	public void initManager(final Login login) {
+	/**
+	 * 
+	 * @param login
+	 */
+	public void init(final Login login) {
 		loginButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				String sessionID = null;
 				User user = authorize();
 				if (user != null) {
-					sessionID = generateSessionID();
-					login.authenticate(user, sessionID);
+					login.authenticate(user, generateSessionID());
 				}
 			}
 		});
 	}
 
 	/**
-	 * Check authorization credentials.
-	 * 
-	 * If accepted, return a sessionID for the authorized session otherwise, return
-	 * null.
+	 * Check credentials. Return the user if authorised.
 	 * 
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
@@ -67,12 +73,12 @@ public class LoginController {
 			return null;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error occurred while getting user information from DB.\n" + e);
+			System.out.println("Error while getting user information from DB." + e);
 			return null;
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("Error while converting password to hash.\n" + e);
+			System.out.println("Error while converting password to hash." + e);
 			return null;
 		}
 	}

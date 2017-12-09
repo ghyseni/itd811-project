@@ -20,6 +20,13 @@ import application.util.Util;
 import application.Login;
 import application.model.User;
 
+/**
+ * @author gresehyseni
+ * 
+ *         Final Project - 12/05/2017
+ * 
+ *         Connects with TasksView and Tasks Model, by interacting with both.
+ */
 public class ProfileController {
 
 	// AnchorPane
@@ -70,13 +77,19 @@ public class ProfileController {
 	@FXML
 	private TableColumn<User, String> userRoleColumn;
 
-	// Called after FXML load
+	/**
+	 * Called after FXML load
+	 */
 	@FXML
 	public void initialize() {
-
 	}
 
-	// Initializing controller class.
+	/**
+	 * Initialize controller. Set label username.
+	 * 
+	 * @param login
+	 * @param user
+	 */
 	public void init(final Login login, User user) {
 
 		fillUserFormInputs(user);
@@ -85,9 +98,13 @@ public class ProfileController {
 		}
 	}
 
-	// Fill User Form Inputs For Update
+	/**
+	 * Fill User Form Inputs For Update
+	 * 
+	 * @param user
+	 */
 	private void fillUserFormInputs(User user) {
-		
+
 		// Set each input field value
 		if (user != null) {
 			userIdText.setText(Integer.toString(user.getUserId()));
@@ -98,25 +115,31 @@ public class ProfileController {
 		}
 	}
 
-	// Update user's details
+	/**
+	 * Update user's details
+	 * 
+	 * @param actionEvent
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	@FXML
 	private void updateUser(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 
 		try {
-
+			// Hash password
 			String plainPassword = newPasswordText.getText();
 			String password = Util.hashPassword(plainPassword);
 
 			UserDAO.updateUser(Integer.parseInt(userIdText.getText()), userNameText.getText(), password,
 					firstNameText.getText(), lastNameText.getText(), roleCombo.getValue().toString());
 
-			System.out.println("User has been updated for, user id: " + userIdText.getText() + "\n");
+			System.out.println("User has been updated.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Problem occurred while updating user: " + e);
+			System.out.println("Problem while updating user: " + e);
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Problem occurred while hashing passowrd: " + e);
+			System.out.println("Problem while hashing passowrd: " + e);
 		}
 	}
 

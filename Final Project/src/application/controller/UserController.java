@@ -20,7 +20,13 @@ import application.model.UserDAO;
 import application.model.User;
 import application.util.Util;
 import application.Login;
-
+/**
+ * @author gresehyseni
+ * 
+ *         Final Project - 12/05/2017
+ * 
+ *         Connects with UserView and User Model, by interacting with both.
+ */
 public class UserController {
 
 	// AnchorPane
@@ -69,7 +75,12 @@ public class UserController {
 	@FXML
 	private TableColumn<User, String> userRoleColumn;
 
-	// Search an user
+	/**
+	 * Search user by ID
+	 * @param actionEvent
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	@FXML
 	private void searchUser(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
 		try {
@@ -84,7 +95,12 @@ public class UserController {
 		}
 	}
 
-	// Search all users
+	/**
+	 * Search all users
+	 * @param actionEvent
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	@FXML
 	private void searchUsers(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
@@ -98,13 +114,20 @@ public class UserController {
 		}
 	}
 
-	// Called after FXML load
+	/**
+	 * Called after FXML load
+	 */
 	@FXML
 	public void initialize() {
 
 	}
 
-	// Initializing controller class.
+	/**
+	 * Initialize controller
+	 * 
+	 * @param login
+	 * @param user
+	 */
 	public void init(final Login login, User user) {
 		userIdColumn.setCellValueFactory(cellData -> cellData.getValue().userIdProperty().asObject());
 		usernameColumn.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
@@ -127,7 +150,11 @@ public class UserController {
 
 	}
 
-	// Fill User Form Inputs For Update
+	/**
+	 * Fill User Form Inputs For Update
+	 * 
+	 * @param user
+	 */
 	private void fillUserFormInputs(User user) {
 		// Set each input field value
 		if (user != null) {
@@ -139,17 +166,24 @@ public class UserController {
 		}
 	}
 
-	// Fill User
+	/**
+	 * Fill User
+	 * 
+	 * @param user
+	 * @throws ClassNotFoundException
+	 */
 	private void fillUser(User user) throws ClassNotFoundException {
-		// Declare and ObservableList for table view
 		ObservableList<User> userData = FXCollections.observableArrayList();
-		// Add user to the ObservableList
 		userData.add(user);
-		// Set items to the userTable
 		userTable.setItems(userData);
 	}
 
-	// Fill User for TableView and Display User on TextArea
+	/**
+	 * Fill User for TableView and Display User on TextArea
+	 * 
+	 * @param user
+	 * @throws ClassNotFoundException
+	 */
 	private void fillAndShowUser(User user) throws ClassNotFoundException {
 		if (user != null) {
 			fillUser(user);
@@ -158,13 +192,22 @@ public class UserController {
 		}
 	}
 
-	// Fill Users for TableView
+	/**
+	 * Fill Users for TableView
+	 * @param userData
+	 * @throws ClassNotFoundException
+	 */
 	private void fillUsers(ObservableList<User> userData) throws ClassNotFoundException {
 		// Set items to the userTable
 		userTable.setItems(userData);
 	}
 
-	// Update user's email with the email which is written on newEmailText field
+	/**
+	 * Update user
+	 * @param actionEvent
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	@FXML
 	private void updateUser(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 
@@ -188,7 +231,12 @@ public class UserController {
 		}
 	}
 
-	// Insert an user to the DB
+	/**
+	 * Insert user to the DB
+	 * @param actionEvent
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	@FXML
 	private void insertUser(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
@@ -206,7 +254,12 @@ public class UserController {
 		}
 	}
 
-	// Delete an user with a given user Id from DB
+	/**
+	 * Delete user with by Id from DB
+	 * @param actionEvent
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	@FXML
 	private void deleteUser(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
