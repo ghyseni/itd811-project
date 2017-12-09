@@ -48,7 +48,6 @@ public class TicketDAO {
 			ticket.setIssuer(rs.getString("issuer"));
 			ticket.setUserId(rs.getInt("user_id"));
 			ticket.setIssuer(rs.getString("status"));
-			ticket.setIssuer(rs.getString("priority"));
 		}
 		return ticket;
 	}
@@ -59,7 +58,7 @@ public class TicketDAO {
 	public static ObservableList<Ticket> searchTickets(String keyword, String status)
 			throws SQLException, ClassNotFoundException {
 
-		if (status.isEmpty()) {
+		if (status==null || status.isEmpty()) {
 			status = "Open";
 		}
 		if (keyword.isEmpty()) {

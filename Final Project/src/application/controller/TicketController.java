@@ -3,15 +3,32 @@ package application.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import application.Login;
@@ -80,8 +97,6 @@ public class TicketController {
 	private TableColumn<Ticket, String> ticketCreatedAtColumn;
 	@FXML
 	private TableColumn<Ticket, String> ticketUpdatedAtColumn;
-	
-	
 
 	// Search an ticket
 	@FXML
@@ -108,9 +123,9 @@ public class TicketController {
 			String keyword = ticketKeywordText.getText();
 			String status = searchStatusCombo.getValue();
 			if (user.getRole().equals("admin")) {
-				ticketData = TicketDAO.searchTickets(keyword,status);
+				ticketData = TicketDAO.searchTickets(keyword, status);
 			} else {
-				ticketData = TicketDAO.searchTickets(keyword,status, user.getUserId());
+				ticketData = TicketDAO.searchTickets(keyword, status, user.getUserId());
 			}
 			// Fill Tickets on TableView
 			fillTickets(ticketData);
@@ -149,7 +164,7 @@ public class TicketController {
 
 		// fill status combo box with item choices.
 		ObservableList<String> statuses = FXCollections.observableArrayList();
-		
+
 		statuses.add("Open");
 		statuses.add("Processing");
 		statuses.add("Closed");
@@ -242,4 +257,21 @@ public class TicketController {
 			throw e;
 		}
 	}
+
+//	// Help Menu button behavior
+//	@FXML
+//	public void addTasks(ActionEvent actionEvent) throws IOException {
+//	
+//	        final FXMLLoader loader = new FXMLLoader(Login.class.getResource("view/DialogRootLayout.fxml"));
+//	        final Parent root =  (BorderPane) loader.load();
+//	        DialogRootLayoutController controller = loader.<DialogRootLayoutController>getController();
+//			controller.initialize(user);
+//	        final Scene scene = new Scene(root, 250, 150);
+//	        Stage stage = new Stage();
+//	        stage.initModality(Modality.APPLICATION_MODAL);
+//	        stage.initStyle(StageStyle.UNDECORATED);
+//	        stage.setScene(scene);
+//	        stage.show();
+//
+//	}
 }

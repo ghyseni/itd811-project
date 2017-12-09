@@ -136,4 +136,21 @@ public class Login extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+//	/**
+//	 * Shows the person overview inside the root layout.
+//	 */
+//	public void showTasksView(User user, Ticket ticket) {
+//		try {
+//			// Load person overview.
+//			FXMLLoader loader = new FXMLLoader();
+//			loader.setLocation(Login.class.getResource("view/TasksView.fxml"));
+//			AnchorPane userView = (AnchorPane) loader.load();
+//			rootLayout.setCenter(userView);
+//			UserController controller = loader.<UserController>getController();
+//			controller.init(this, user);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 }

@@ -9,9 +9,11 @@
     <TextField fx:id="ticketIdText" layoutX="233.0" layoutY="41.0" prefHeight="25.0" prefWidth="67.0" promptText="Ticket ID" />
       <Label layoutX="234.0" layoutY="21.0" text="Ticket ID" />
       <Button fx:id="searchTicketBtn" layoutX="234.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchTicket" prefHeight="25.0" prefWidth="56.0" text="Search" />
-      <Button fx:id="deleteTicketBtn" layoutX="97.0" layoutY="275.0" mnemonicParsing="false" onAction="#deleteTicket" prefHeight="25.0" prefWidth="56.0" text="Delete" />
-      <Button fx:id="addTicketBtn" layoutX="97.0" layoutY="180.0" mnemonicParsing="false" onAction="#insertTicket" text="Add Ticket" />
-      <Button fx:id="updateTicketBtn" visible="false" layoutX="97.0" layoutY="207.0" mnemonicParsing="false" onAction="#updateTicket" prefHeight="25.0" prefWidth="56.0" text="Update" />     
+       <Button fx:id="addTasksBtn" layoutX="294.0" layoutY="70.0" mnemonicParsing="false" onAction="#addTasks" prefHeight="25.0" prefWidth="56.0" text="Add tasks" />
+      
+      <Button fx:id="addTicketBtn" layoutX="97.0" layoutY="237.0" mnemonicParsing="false" onAction="#insertTicket" text="Add Ticket" />
+      <Button fx:id="updateTicketBtn" visible="false" layoutX="97.0" layoutY="207.0" mnemonicParsing="false" onAction="#updateTicket" prefHeight="25.0" prefWidth="56.0" text="Update" />
+       <Button fx:id="deleteTicketBtn" layoutX="97.0" layoutY="267.0" mnemonicParsing="false" onAction="#deleteTicket" prefHeight="25.0" prefWidth="56.0" text="Delete" />         
      <TextField fx:id="ticketKeywordText" layoutX="308.0" layoutY="41.0" prefHeight="25.0" prefWidth="120.0" promptText="Keyword" text=""/>
      <Label layoutX="308.0" layoutY="21.0" text="Keyword" /> 
       <VBox layoutX="97.0" layoutY="24.0" spacing="4.0">
@@ -20,7 +22,7 @@
             <TextArea fx:id="ticketDescriptionTextArea" prefHeight="60.0" prefWidth="120.0" promptText="Description" />            
 		    <ComboBox fx:id="departmentCombo" prefHeight="25.0" prefWidth="120.0" promptText="Department"/>
             <TextField fx:id="ticketIssuerText" prefHeight="25.0" prefWidth="120.0" promptText="Issuer" />
-            <ComboBox fx:id="statusCombo" prefHeight="25.0" prefWidth="120.0" promptText="Status"/>
+            <ComboBox fx:id="statusCombo" prefHeight="25.0" prefWidth="120.0" promptText="Status" value=""/>
          </children>
       </VBox>
       <VBox layoutX="9.0" layoutY="28.0" prefWidth="67.0" spacing="12.0">

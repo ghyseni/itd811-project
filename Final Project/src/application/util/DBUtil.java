@@ -6,23 +6,20 @@ import java.sql.*;
  * Created by ONUR BASKIRT on 22.02.2016.
  */
 public class DBUtil {
-    //Declare JDBC Driver
+    //JDBC Driver
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
  
-    //Connection
+    //Connection fields
     private static Connection conn = null;
- 
-    //Connection String
     static final String DATABASE_NAME = "tickets";
     static final String DB_URL = "jdbc:mysql://localhost/" + DATABASE_NAME;
-	// Database credentials
 	static final String USER = "root";
 	static final String PASS = "";
  
  
     //Connect to DB
     public static void dbConnect() throws SQLException, ClassNotFoundException {
-        //Setting Oracle JDBC Driver
+        // JDBC Driver
         try {
             Class.forName(JDBC_DRIVER);
         } catch (ClassNotFoundException e) {
@@ -31,9 +28,7 @@ public class DBUtil {
             throw e;
         }
  
-        System.out.println("Oracle JDBC Driver Registered!");
- 
-        //Establish the Oracle Connection using Connection String
+        //Establish connection
         try {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException e) {
@@ -56,47 +51,35 @@ public class DBUtil {
  
     //DB Execute Query Operation
     public static ResultSet dbExecuteQuery(String queryStmt) throws SQLException, ClassNotFoundException {
-        //Declare statement, resultSet and CachedResultSet as null
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            //Connect to DB (Establish Oracle Connection)
             dbConnect();
-            System.out.println("Select statement: " + queryStmt + "\n");
- 
-            //Create statement
+            System.out.println("Select statement: " + queryStmt);
             stmt = conn.createStatement();
- 
-            //Execute select (query) 
             rs = stmt.executeQuery(queryStmt);
         } catch (SQLException e) {
-            System.out.println("Problem occurred at executeQuery. " + e);
+            System.out.println("Problem occurred while executing query. " + e);
             throw e;
         } 
-        //Return CachedRowSet
         return rs;
     }
  
     //DB Execute Update (For Update/Insert/Delete) Operation
     public static void dbExecuteUpdate(String sqlStmt) throws SQLException, ClassNotFoundException {
-        //Declare statement as null
         Statement stmt = null;
         try {
-            //Connect to DB (Establish Oracle Connection)
             dbConnect();
-            //Create Statement
             stmt = conn.createStatement();
-            //Run executeUpdate  with given sql statement
             stmt.executeUpdate(sqlStmt);
+            System.out.println("Update statement: " + sqlStmt);
         } catch (SQLException e) {
-            System.out.println("Problem occurred at executeUpdate. " + e);
+        	 System.out.println("Problem occurred while executing query. " + e);
             throw e;
         } finally {
             if (stmt != null) {
-                //Close statement
                 stmt.close();
             }
-            //Close connection
             dbDisconnect();
         }
     }
