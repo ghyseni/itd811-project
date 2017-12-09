@@ -17,6 +17,52 @@ import javafx.collections.ObservableList;
 public class UserDAO {
 
 	/**
+	 * Call to create table users
+	 */
+	public static void createTable() {
+
+		String createTableStmt = "CREATE TABLE users (user_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,"
+				+ " username varchar(30) NOT NULL," + "  password varchar(64) NOT NULL,"
+				+ " first_name varchar(30) NOT NULL," + "  last_name varchar(30) NOT NULL,"
+				+ " role varchar(30) NOT NULL," + "  PRIMARY KEY ( user_id ))";
+
+		// Execute CREATE statement
+		try {
+			DBUtil.dbExecuteUpdate(createTableStmt);
+		} catch (SQLException e) {
+			System.out.println("While creating table users, error occured." + e);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Call to insert initial users
+	 */
+	public static void InsertUsers() {
+
+		//Admin password=admin
+		//Qendrese password=test
+		String insertStmt = "INSERT INTO users (username, password, first_name, last_name, role) VALUES"
+				+ "('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'Grese', 'Hyseni', 'admin'),"
+				+ "('qendrese', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 'Qendrese', 'Hyseni', 'Employee');"
+				+ "";
+
+		System.out.println(insertStmt);
+
+		// Execute CREATE statement
+		try {
+			DBUtil.dbExecuteUpdate(insertStmt);
+		} catch (SQLException e) {
+			System.out.println("While  inserting users, error occured." + e);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * SELECT User by ID
 	 * 
 	 * @param userId

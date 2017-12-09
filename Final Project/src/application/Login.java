@@ -6,8 +6,11 @@ import application.controller.RootLayoutController;
 import application.controller.TicketController;
 import application.controller.TasksController;
 import application.controller.UserController;
+import application.model.TaskDAO;
 import application.model.Ticket;
+import application.model.TicketDAO;
 import application.model.User;
+import application.model.UserDAO;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -31,13 +34,21 @@ public class Login extends Application {
 	private Scene scene;
 	private Stage stage;
 	private BorderPane rootLayout;
+	
 
-	public static void main(String[] args) {
+
+	public static void main(String[] args) {	
 		launch(args);
 	}
 
 	@Override
 	public void start(Stage stage) throws IOException {
+		
+		TicketDAO.createTable();
+		UserDAO.createTable();
+		UserDAO.InsertUsers();
+		TaskDAO.createTable();
+		
 		scene = new Scene(new StackPane());
 		this.stage = stage;
 		showLoginView();

@@ -16,7 +16,7 @@ public class DBUtil {
 
 	// Connection fields
 	private static Connection conn = null;
-	static final String DATABASE_NAME = "tickets";
+	static final String DATABASE_NAME = "test";
 	static final String DB_URL = "jdbc:mysql://localhost/" + DATABASE_NAME;
 	static final String USER = "root";
 	static final String PASS = "";

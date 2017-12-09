@@ -1,5 +1,6 @@
 package application.model;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -15,6 +16,30 @@ import javafx.collections.ObservableList;
  *         Provides the interaction with the database directly.
  */
 public class TaskDAO {
+
+	/**
+	 * Call to create table tasks
+	 */
+	public static void createTable() {
+
+		String createTableStmt = "CREATE TABLE tasks (task_id int(11) NOT NULL AUTO_INCREMENT,"
+				+ " name varchar(200) NOT NULL," + "  description varchar(300) NOT NULL,"
+				+ " assigned_to varchar(30) NOT NULL," + "  status varchar(30) NOT NULL,"
+				+ " created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+				+ " updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,"
+				+ " ticket_id int(11) NOT NULL, PRIMARY KEY ( task_id ))";
+
+
+		// Execute CREATE statement
+		try {
+			DBUtil.dbExecuteUpdate(createTableStmt);
+		} catch (SQLException e) {
+			System.out.println("While creating table tasks, error occured." + e);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * SELECT Task by task id
@@ -35,7 +60,7 @@ public class TaskDAO {
 			Task task = getTaskFromResultSet(rsTask);
 			return task;
 		} catch (SQLException e) {
-			System.out.println("While searching an task with " + taskId + " id, an error occurred: " + e);
+			System.out.println("While searching an task with " + taskId + " id, an error: " + e);
 			throw e;
 		}
 	}
@@ -101,7 +126,7 @@ public class TaskDAO {
 	}
 
 	/**
-	 * Select * from tasks. Set Task Object's attributes from DB ResultSet.
+	 * Select * from tasksSet Task Object's attributes from DB ResultSet.
 	 * 
 	 * @param rs
 	 * @return

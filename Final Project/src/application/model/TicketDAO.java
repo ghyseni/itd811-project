@@ -15,6 +15,35 @@ import javafx.collections.ObservableList;
  *         Provides the interaction with the database directly.
  */
 public class TicketDAO {
+	
+	/**
+	 * Call to create table tickets
+	 */
+	public static void createTable() {
+
+		String createTableStmt = "CREATE TABLE tickets (" + 
+				" ticket_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT," + 
+				" name varchar(30) NOT NULL," + 
+				" description varchar(200) NOT NULL," + 
+				" department varchar(30) NOT NULL," + 
+				" issuer varchar(30) NOT NULL," + 
+				" status varchar(10) NOT NULL," + 
+				" created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP," + 
+				" updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP," + 
+				" user_id int(11) NOT NULL, PRIMARY KEY ( ticket_id ))";
+
+		// Execute CREATE statement
+		try {
+			DBUtil.dbExecuteUpdate(createTableStmt);
+		} catch (SQLException e) {
+			System.out.println("While creating table tickets, error occured." + e);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+
 
 	/**
 	 * SELECT Ticket by ticket id
