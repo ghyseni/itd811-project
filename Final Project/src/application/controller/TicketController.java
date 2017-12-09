@@ -149,10 +149,12 @@ public class TicketController {
 
 		// fill status combo box with item choices.
 		ObservableList<String> statuses = FXCollections.observableArrayList();
+		
 		statuses.add("Open");
 		statuses.add("Processing");
 		statuses.add("Closed");
 		statusCombo.setItems(statuses);
+		statuses.add("");
 		searchStatusCombo.setItems(statuses);
 
 		// Add action on table selection

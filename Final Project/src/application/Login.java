@@ -96,7 +96,7 @@ public class Login extends Application {
 			rootLayout.setCenter(ticketView);
 			TicketController controller = loader.<TicketController>getController();
 			controller.init(this, user);
-
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

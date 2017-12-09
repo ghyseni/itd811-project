@@ -78,9 +78,8 @@ public class RootLayoutController {
 	// Help Menu button behavior
 	public void handleHelp(ActionEvent actionEvent) {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("Program Information");
-		alert.setHeaderText("Trouble Ticket System!");
-		alert.setContentText("You can search, delete, update, insert a new employee with this program.");
+		alert.setTitle("Trouble Ticket System");
+		alert.setContentText("You can login as admin or employee, and you'll be able to manage users and all tickets if loggen id as admin, or only your tickets if logged in as employee.");
 		alert.show();
 	}
 
