@@ -16,7 +16,7 @@ public class TicketDAO {
 	public static Ticket searchTicket(String ticketId) throws SQLException, ClassNotFoundException {
 		// Declare a SELECT statement
 
-		String selectStmt = "SELECT * FROM tickets WHERE ticket_id=" + ticketId;
+		String selectStmt = "SELECT * FROM tickets INNER JOIN users ON tickets.user_id=users.user_id WHERE ticket_id=" + ticketId;
 		System.out.println(selectStmt);
 
 		// Execute SELECT statement

@@ -87,7 +87,6 @@ public class TicketController {
 	// Search an ticket
 	@FXML
 	private void searchTicket(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
-		System.out.println(actionEvent);
 		try {
 			// Get Ticket information
 			Ticket ticket = TicketDAO.searchTicket(ticketIdText.getText());
@@ -108,7 +107,8 @@ public class TicketController {
 			ObservableList<Ticket> ticketData = null;
 			String keyword = ticketKeywordText.getText();
 			String status = searchStatusCombo.getValue();
-			if (user.getRole().equals("admin")) {
+			
+			 if (user.getRole().equals("admin")) {
 				ticketData = TicketDAO.searchTickets(keyword, status);
 			} else {
 				ticketData = TicketDAO.searchTickets(keyword, status, user.getUserId());

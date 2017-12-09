@@ -37,6 +37,7 @@ public class Login extends Application {
 		showLoginView();
 
 		stage.setScene(scene);
+		stage.setTitle("Trouble Ticket System - Login");
 		stage.show();
 	}
 
@@ -80,6 +81,7 @@ public class Login extends Application {
 			scene.setRoot(rootLayout);
 			stage.sizeToScene();
 			stage.centerOnScreen();
+			stage.setTitle("Trouble Ticket System - Profile");
 
 		} catch (IOException ex) {
 			Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -87,7 +89,7 @@ public class Login extends Application {
 	}
 
 	/**
-	 * Shows the person overview inside the root layout.
+	 * Shows ticket view inside root layout.
 	 */
 	public void showTicketView(User user) {
 		try {
@@ -99,13 +101,15 @@ public class Login extends Application {
 			TicketController controller = loader.<TicketController>getController();
 			controller.init(this, user);
 			
+			stage.setTitle("Trouble Ticket System - Tickets");
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Shows the person overview inside the root layout.
+	 * Shows profile view inside root layout.
 	 */
 	public void showProfile(User user) {
 		try {
@@ -116,6 +120,8 @@ public class Login extends Application {
 			rootLayout.setCenter(profileView);
 			ProfileController controller = loader.<ProfileController>getController();
 			controller.init(this, user);
+			
+			stage.setTitle("Trouble Ticket System - Profile");
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -123,7 +129,7 @@ public class Login extends Application {
 	}
 
 	/**
-	 * Shows the person overview inside the root layout.
+	 * Shows user view inside root layout.
 	 */
 	public void showUserView(User user) {
 		try {
@@ -134,13 +140,16 @@ public class Login extends Application {
 			rootLayout.setCenter(userView);
 			UserController controller = loader.<UserController>getController();
 			controller.init(this, user);
+			
+			stage.setTitle("Trouble Ticket System - Users");
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	/**
-	 * Shows the person overview inside the root layout.
+	 * Shows tasks view inside root layout.
 	 */
 	public void showOpenTicketView(User user, Ticket ticket) {  
 		try {
@@ -151,6 +160,9 @@ public class Login extends Application {
 			rootLayout.setCenter(ticketOpenView);
 			TasksController controller = loader.<TasksController>getController();
 			controller.init(this, user, ticket);
+			
+			stage.setTitle("Trouble Ticket System - Tasks");
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

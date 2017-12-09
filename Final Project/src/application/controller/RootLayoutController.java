@@ -76,11 +76,11 @@ public class RootLayoutController {
 	}
 
 	//About menu
-	public void handleAbout(ActionEvent actionEvent) {
-//		Alert alert = new Alert(Alert.AlertType.NONE);
-//		alert.setTitle("Trouble Ticket System");
-//		alert.setContentText("You can login as admin or employee, and you'll be able to manage users and all tickets if loggen id as admin, or only your tickets if logged in as employee.");
-//		alert.show();
+	public void showAbout(ActionEvent actionEvent) {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("Trouble Ticket System - Grese Hyseni");
+		alert.setContentText("You can login as admin or employee, and you'll be able to manage users and all tickets if loggen id as admin, or only your tickets if logged in as employee.");
+		alert.show();
 	}
 
 }
