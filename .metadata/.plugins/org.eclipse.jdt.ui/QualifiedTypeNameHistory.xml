@@ -48,4 +48,8 @@
     <fullyQualifiedTypeName name="application.controller.AdminRootLayoutController"/>
     <fullyQualifiedTypeName name="javafx.scene.control.ComboBox"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.Optional"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.ButtonType"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.Alert"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.Alert.AlertType"/>
 </qualifiedTypeNameHistroy>
