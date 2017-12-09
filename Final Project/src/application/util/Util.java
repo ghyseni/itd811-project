@@ -3,8 +3,24 @@ package application.util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * @author gresehyseni
+ * 
+ *         Final Project - 12/09/2017
+ * 
+ *         Intended to provides helpful methods in general to be used by other
+ *         classes. Right now includes the password hashing method
+ */
 public class Util {
 
+	/**
+	 * Gets the plain text password, and coverts it into hash using SH-256
+	 * algorithm.
+	 * 
+	 * @param plainPassword
+	 * @return
+	 * @throws NoSuchAlgorithmException
+	 */
 	public static String hashPassword(String plainPassword) throws NoSuchAlgorithmException {
 
 		String hash = null;

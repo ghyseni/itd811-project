@@ -1,7 +1,14 @@
 package application.model;
 
 import javafx.beans.property.*;
-
+/**
+ * @author gresehyseni
+ * 
+ *         Final Project - 12/06/2017
+ * 
+ *         Provides a class that will be used to interact with Ticket data records, and
+ *         use the results to populate fxml table
+ */
 public class Ticket {
 	private IntegerProperty ticketId;
 	private StringProperty name;
@@ -14,7 +21,9 @@ public class Ticket {
 	private StringProperty username;
 	private IntegerProperty userId;
 
-	// Constructor
+	/**
+	 * Constructor. SimpleProperty used to fill table after
+	 */
 	public Ticket() {
 		this.ticketId = new SimpleIntegerProperty();
 		this.name = new SimpleStringProperty();
@@ -27,6 +36,8 @@ public class Ticket {
 		this.userId = new SimpleIntegerProperty();
 		this.username = new SimpleStringProperty();
 	}
+	
+	// Getters and Setters
 
 	// ticketId
 	public int getTicketId() {

@@ -2,6 +2,14 @@ package application.model;
 
 import javafx.beans.property.*;
 
+/**
+ * @author gresehyseni
+ * 
+ *         Final Project - 12/06/2017
+ * 
+ *         Provides a class that will be used to interact with Task data records, and
+ *         use the results to populate fxml table
+ */
 public class Task {
 	private IntegerProperty taskId;
 	private StringProperty name;
@@ -12,7 +20,9 @@ public class Task {
 	private StringProperty updatedAt;
 	private IntegerProperty ticketId;
 
-	// Constructor
+	/**
+	 * Constructor. SimpleProperty used to fill table after
+	 */
 	public Task() {
 		this.taskId = new SimpleIntegerProperty();
 		this.name = new SimpleStringProperty();
@@ -24,7 +34,9 @@ public class Task {
 		this.updatedAt = new SimpleStringProperty();
 	}
 
-	// taskId
+	// Getters and Setters
+
+	// id
 	public int getTaskId() {
 		return taskId.get();
 	}
@@ -75,7 +87,7 @@ public class Task {
 	public StringProperty assignedToProperty() {
 		return assignedTo;
 	}
-	
+
 	// status
 	public String getStatus() {
 		return status.get();
@@ -88,6 +100,7 @@ public class Task {
 	public StringProperty statusProperty() {
 		return status;
 	}
+
 	// createdAt
 	public String getCreatedAt() {
 		return createdAt.get();
@@ -100,6 +113,7 @@ public class Task {
 	public StringProperty createdAtProperty() {
 		return createdAt;
 	}
+
 	// updatedAt
 	public String getUpdatedAt() {
 		return updatedAt.get();
@@ -112,7 +126,7 @@ public class Task {
 	public StringProperty updatedAtProperty() {
 		return updatedAt;
 	}
-	
+
 	// taskId
 	public int getTicketId() {
 		return ticketId.get();

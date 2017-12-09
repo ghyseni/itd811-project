@@ -2,6 +2,14 @@
 
 import javafx.beans.property.*;
 
+/**
+ * @author gresehyseni
+ * 
+ *         Final Project - 12/06/2017
+ * 
+ *         Provides a class that will be used to interact with User data records, and
+ *         use the results to populate fxml table
+ */
 public class User {
 	private IntegerProperty userId;
 	private StringProperty username;
@@ -10,7 +18,9 @@ public class User {
 	private StringProperty lastName;
 	private StringProperty role;
 
-	// Constructor
+	/**
+	 * Constructor. SimpleProperty used to fill table after
+	 */
 	public User() {
 		this.userId = new SimpleIntegerProperty();
 		this.username = new SimpleStringProperty();
@@ -19,6 +29,8 @@ public class User {
 		this.lastName = new SimpleStringProperty();
 		this.role = new SimpleStringProperty();
 	}
+	
+	// Getters and Setters
 
 	// userId
 	public int getUserId() {

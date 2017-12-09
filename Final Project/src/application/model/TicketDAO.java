@@ -1,6 +1,5 @@
 package application.model;
 
-import java.io.Console;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -8,36 +7,48 @@ import application.util.DBUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * @author gresehyseni
+ * 
+ *         Final Project - 12/06/2017
+ * 
+ *         Provides the interaction with the database directly.
+ */
 public class TicketDAO {
 
-	// *******************************
-	// SELECT an Ticket
-	// *******************************
+	/**
+	 * SELECT Ticket by ticket id
+	 * 
+	 * @param ticketId
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public static Ticket searchTicket(String ticketId) throws SQLException, ClassNotFoundException {
 		// Declare a SELECT statement
 
-		String selectStmt = "SELECT * FROM tickets INNER JOIN users ON tickets.user_id=users.user_id WHERE ticket_id=" + ticketId;
+		String selectStmt = "SELECT * FROM tickets INNER JOIN users ON tickets.user_id=users.user_id WHERE ticket_id="
+				+ ticketId;
 		System.out.println(selectStmt);
 
 		// Execute SELECT statement
 		try {
-			// Get ResultSet from dbExecuteQuery method
 			ResultSet rsTicket = DBUtil.dbExecuteQuery(selectStmt);
-
-			// Send ResultSet to the getTicketFromResultSet method and get ticket object
 			Ticket ticket = getTicketFromResultSet(rsTicket);
-
-			// Return ticket object
 			return ticket;
 		} catch (SQLException e) {
 			System.out.println("While searching an ticket with " + ticketId + " id, an error occurred: " + e);
-			// Return exception
 			throw e;
 		}
 	}
 
-	// Use ResultSet from DB as parameter and set Ticket Object's attributes and
-	// return ticket object.
+	/**
+	 * Set Ticket Object's attributes from DB ResultSet.
+	 * 
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
 	private static Ticket getTicketFromResultSet(ResultSet rs) throws SQLException {
 		Ticket ticket = null;
 		if (rs.next()) {
@@ -56,77 +67,85 @@ public class TicketDAO {
 		return ticket;
 	}
 
-	// *******************************
-	// SELECT Tickets
-	// *******************************
+	/**
+	 * SELECT Tickets by keyword, status
+	 * 
+	 * @param keyword
+	 * @param status
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public static ObservableList<Ticket> searchTickets(String keyword, String status)
 			throws SQLException, ClassNotFoundException {
 
-		if (status==null || status.isEmpty()) {
+		if (status == null || status.isEmpty()) {
 			status = "%";
 		}
 		if (keyword.isEmpty()) {
 			keyword = "%";
-		}else {
-			keyword = "%"+keyword+"%";
+		} else {
+			keyword = "%" + keyword + "%";
 		}
-		// Declare a SELECT statement
-		String selectStmt = "SELECT * FROM tickets INNER JOIN users ON tickets.user_id=users.user_id WHERE (name LIKE '" + keyword + "' OR description LIKE '" + keyword
-				+ "') AND status LIKE '" + status + "'";
+
+		String selectStmt = "SELECT * FROM tickets INNER JOIN users ON tickets.user_id=users.user_id WHERE (name LIKE '"
+				+ keyword + "' OR description LIKE '" + keyword + "') AND status LIKE '" + status + "'";
 
 		// Execute SELECT statement
 		try {
-			// Get ResultSet from dbExecuteQuery method
 			ResultSet rsTickets = DBUtil.dbExecuteQuery(selectStmt);
-
-			// Send ResultSet to the getTicketList method and get ticket object
 			ObservableList<Ticket> ticketList = getTicketList(rsTickets);
-
-			// Return ticket object
 			return ticketList;
 		} catch (SQLException e) {
 			System.out.println("SQL select operation has been failed: " + e);
-			// Return exception
 			throw e;
 		}
 	}
 
-	// *******************************
-	// SELECT Tickets by userId
-	// *******************************
+	/**
+	 * SELECT Tickets by keyword, status, userId
+	 * 
+	 * @param keyword
+	 * @param status
+	 * @param userId
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public static ObservableList<Ticket> searchTickets(String keyword, String status, int userId)
 			throws SQLException, ClassNotFoundException {
 
-		if (status.isEmpty()) {
-			status = "Open";
+		if (status == null || status.isEmpty()) {
+			status = "%";
 		}
 		if (keyword.isEmpty()) {
 			keyword = "%";
-		}else {
-			keyword = "%"+keyword+"%";
+		} else {
+			keyword = "%" + keyword + "%";
 		}
-		// Declare a SELECT statement
-		String selectStmt = "SELECT * FROM tickets WHERE (name LIKE '" + keyword + "' OR description LIKE '" + keyword
-				+ "') AND status='" + status + "' AND user_id=" + userId;
+
+		String selectStmt = "SELECT * FROM tickets INNER JOIN users ON tickets.user_id=users.user_id WHERE (name LIKE '" + keyword + "' OR description LIKE '" + keyword
+				+ "') AND status LIKE '" + status + "' AND tickets.user_id=" + userId;
 
 		// Execute SELECT statement
 		try {
-			// Get ResultSet from dbExecuteQuery method
 			ResultSet rsTickets = DBUtil.dbExecuteQuery(selectStmt);
-
-			// Send ResultSet to the getTicketList method and get ticket object
 			ObservableList<Ticket> ticketList = getTicketList(rsTickets);
-
-			// Return ticket object
 			return ticketList;
 		} catch (SQLException e) {
-			System.out.println("SQL select operation has been failed: " + e);
-			// Return exception
+			System.out.println("SQL select operation has failed: " + e);
 			throw e;
 		}
 	}
 
-	// Select * from tickets
+	/**
+	 * Select * from tickets. Set Ticket Object's attributes from DB ResultSet.
+	 * 
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	private static ObservableList<Ticket> getTicketList(ResultSet rs) throws SQLException, ClassNotFoundException {
 
 		ObservableList<Ticket> userList = FXCollections.observableArrayList();
@@ -143,19 +162,29 @@ public class TicketDAO {
 			ticket.setStatus(rs.getString("status"));
 			ticket.setCreatedAt(rs.getTimestamp("created_at").toString());
 			ticket.setUpdatedAt(rs.getTimestamp("updated_at").toString());
-			
+
 			userList.add(ticket);
 		}
 		return userList;
 	}
 
-	// *************************************
-	// UPDATE a ticket
-	// *************************************
+	/**
+	 * Update ticket
+	 * 
+	 * @param ticketId
+	 * @param ticketName
+	 * @param ticketDescription
+	 * @param ticketDepartment
+	 * @param issuer
+	 * @param userId
+	 * @param status
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public static void updateTicket(String ticketId, String ticketName, String ticketDescription,
 			String ticketDepartment, String issuer, int userId, String status)
 			throws SQLException, ClassNotFoundException {
-		// Declare a UPDATE statement
+
 		String updateStmt = "UPDATE tickets SET name = '" + ticketName + "', description = '" + ticketDescription
 				+ "', department = '" + ticketDepartment + "', issuer = '" + issuer + "', user_id = " + userId
 				+ ", status='" + status + "' WHERE ticket_id = " + ticketId;
@@ -164,33 +193,46 @@ public class TicketDAO {
 		try {
 			DBUtil.dbExecuteUpdate(updateStmt);
 		} catch (SQLException e) {
-			System.out.print("Error occurred while UPDATE ticket name: " + e);
+			System.out.print("Error while UPDATE ticket name: " + e);
 			throw e;
 		}
 	}
 
-	// *************************************
-	// DELETE a ticket
-	// *************************************
+	/**
+	 * Delete ticket
+	 * 
+	 * @param ticketId
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public static void deleteTicketWithId(String ticketId) throws SQLException, ClassNotFoundException {
-		// Declare a DELETE statement
+
 		String updateStmt = "DELETE FROM tickets WHERE ticket_id =" + ticketId;
 
 		// Execute UPDATE operation
 		try {
 			DBUtil.dbExecuteUpdate(updateStmt);
 		} catch (SQLException e) {
-			System.out.print("Error occurred while DELETE ticket: " + e);
+			System.out.print("Error while DELETE ticket: " + e);
 			throw e;
 		}
 	}
 
-	// *************************************
-	// INSERT a ticket
-	// *************************************
+	/**
+	 * Insert ticket
+	 * 
+	 * @param name
+	 * @param description
+	 * @param department
+	 * @param issuer
+	 * @param userId
+	 * @param status
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public static void insertTicket(String name, String description, String department, String issuer, int userId,
 			String status) throws SQLException, ClassNotFoundException {
-		// Declare a DELETE statement
+
 		String updateStmt = "INSERT INTO tickets " + "(name, description, department, issuer, user_id, status) "
 				+ "VALUES " + "('" + name + "','" + description + "','" + department + "','" + issuer + "'," + userId
 				+ ",'" + status + "')";
@@ -199,7 +241,7 @@ public class TicketDAO {
 		try {
 			DBUtil.dbExecuteUpdate(updateStmt);
 		} catch (SQLException e) {
-			System.out.print("Error occurred while insert Ticket: " + e);
+			System.out.print("Error while insert Ticket: " + e);
 			throw e;
 		}
 	}
