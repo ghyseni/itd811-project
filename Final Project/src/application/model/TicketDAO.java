@@ -48,6 +48,7 @@ public class TicketDAO {
 			ticket.setIssuer(rs.getString("issuer"));
 			ticket.setUserId(rs.getInt("user_id"));
 			ticket.setIssuer(rs.getString("status"));
+			ticket.setIssuer(rs.getString("priority"));
 		}
 		return ticket;
 	}
@@ -55,15 +56,20 @@ public class TicketDAO {
 	// *******************************
 	// SELECT Tickets
 	// *******************************
-	public static ObservableList<Ticket> searchTickets(String keyword) throws SQLException, ClassNotFoundException {
-		// Declare a SELECT statement
-		String selectStmt = "";
-		if (keyword.isEmpty()) {
-			selectStmt = "SELECT * FROM tickets";
-		} else {
-			selectStmt = "SELECT * FROM tickets where name LIKE '%" + keyword + "%' OR description LIKE '%" + keyword
-					+ "%' OR status LIKE '%" + keyword + "%'";
+	public static ObservableList<Ticket> searchTickets(String keyword, String status)
+			throws SQLException, ClassNotFoundException {
+
+		if (status.isEmpty()) {
+			status = "Open";
 		}
+		if (keyword.isEmpty()) {
+			keyword = "%";
+		}else {
+			keyword = "%"+keyword+"%";
+		}
+		// Declare a SELECT statement
+		String selectStmt = "SELECT * FROM tickets WHERE (name LIKE '" + keyword + "' OR description LIKE '" + keyword
+				+ "') AND status='" + status + "'";
 
 		// Execute SELECT statement
 		try {
@@ -85,16 +91,20 @@ public class TicketDAO {
 	// *******************************
 	// SELECT Tickets by userId
 	// *******************************
-	public static ObservableList<Ticket> searchTickets(String keyword, int userId)
+	public static ObservableList<Ticket> searchTickets(String keyword, String status, int userId)
 			throws SQLException, ClassNotFoundException {
-		// Declare a SELECT statement
-		String selectStmt = "";
-		if (keyword.isEmpty()) {
-			selectStmt = "SELECT * FROM tickets where user_id=" + userId;
-		} else {
-			selectStmt = "SELECT * FROM tickets where name LIKE '%" + keyword + "%' OR description LIKE '%" + keyword
-					+ "%' OR status LIKE '%" + keyword + "% AND user_id=" + userId;
+
+		if (status.isEmpty()) {
+			status = "Open";
 		}
+		if (keyword.isEmpty()) {
+			keyword = "%";
+		}else {
+			keyword = "%"+keyword+"%";
+		}
+		// Declare a SELECT statement
+		String selectStmt = "SELECT * FROM tickets WHERE (name LIKE '" + keyword + "' OR description LIKE '" + keyword
+				+ "') AND status='" + status + "' AND user_id=" + userId;
 
 		// Execute SELECT statement
 		try {

@@ -41,6 +41,8 @@ public class TicketController {
 	@FXML
 	private TextField ticketKeywordText;
 	@FXML
+	private ComboBox<String> searchStatusCombo;
+	@FXML
 	private ComboBox<String> statusCombo;
 
 	// Buttons
@@ -74,6 +76,12 @@ public class TicketController {
 	private TableColumn<Ticket, String> ticketIssuerColumn;
 	@FXML
 	private TableColumn<Ticket, String> ticketStatusColumn;
+	@FXML
+	private TableColumn<Ticket, String> ticketCreatedAtColumn;
+	@FXML
+	private TableColumn<Ticket, String> ticketUpdatedAtColumn;
+	
+	
 
 	// Search an ticket
 	@FXML
@@ -98,10 +106,11 @@ public class TicketController {
 			// Get all Tickets information
 			ObservableList<Ticket> ticketData = null;
 			String keyword = ticketKeywordText.getText();
+			String status = searchStatusCombo.getValue();
 			if (user.getRole().equals("admin")) {
-				ticketData = TicketDAO.searchTickets(keyword);
+				ticketData = TicketDAO.searchTickets(keyword,status);
 			} else {
-				ticketData = TicketDAO.searchTickets(keyword, user.getUserId());
+				ticketData = TicketDAO.searchTickets(keyword,status, user.getUserId());
 			}
 			// Fill Tickets on TableView
 			fillTickets(ticketData);
@@ -129,8 +138,8 @@ public class TicketController {
 		ticketUserIdColumn.setCellValueFactory(cellData -> cellData.getValue().userIdProperty().asObject());
 		ticketIssuerColumn.setCellValueFactory(cellData -> cellData.getValue().issuerProperty());
 		ticketStatusColumn.setCellValueFactory(cellData -> cellData.getValue().issuerProperty());
-//		ticketCreatedAtColumn.setCellValueFactory(cellData -> cellData.getValue().issuerProperty());
-//		ticketUpdatedAtColumn.setCellValueFactory(cellData -> cellData.getValue().issuerProperty());
+		ticketCreatedAtColumn.setCellValueFactory(cellData -> cellData.getValue().issuerProperty());
+		ticketUpdatedAtColumn.setCellValueFactory(cellData -> cellData.getValue().issuerProperty());
 
 		// fill department combo box with item choices.
 		ObservableList<String> departments = FXCollections.observableArrayList();
@@ -144,6 +153,7 @@ public class TicketController {
 		statuses.add("Processing");
 		statuses.add("Closed");
 		statusCombo.setItems(statuses);
+		searchStatusCombo.setItems(statuses);
 
 		// Add action on table selection
 		ticketTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {

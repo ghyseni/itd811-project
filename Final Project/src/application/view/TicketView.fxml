@@ -13,6 +13,7 @@
       <Button fx:id="addTicketBtn" layoutX="97.0" layoutY="180.0" mnemonicParsing="false" onAction="#insertTicket" text="Add Ticket" />
       <Button fx:id="updateTicketBtn" visible="false" layoutX="97.0" layoutY="207.0" mnemonicParsing="false" onAction="#updateTicket" prefHeight="25.0" prefWidth="56.0" text="Update" />     
      <TextField fx:id="ticketKeywordText" layoutX="268.0" layoutY="41.0" prefHeight="25.0" prefWidth="120.0" promptText="Keyword" text=""/>
+     
       <Label layoutX="270.0" layoutY="21.0" text="Keyword" /> 
       <VBox layoutX="97.0" layoutY="24.0" spacing="4.0">
          <children>
@@ -47,6 +48,7 @@
                <TableColumn fx:id="ticketUpdatedAtColumn" prefWidth="73.0" text="Updated at" />
         </columns>
       </TableView>
+      <ComboBox fx:id="searchStatusCombo" layoutX="396.0" layoutY="41.0" prefHeight="25.0" prefWidth="120.0" promptText="Status" value="Processing"/>
       <Button fx:id="searchTicketsBtn" layoutX="396.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchTickets" prefHeight="25.0" prefWidth="139.0" text="Search All Tickets" />
    </children>
 </AnchorPane>
