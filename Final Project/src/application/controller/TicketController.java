@@ -38,9 +38,10 @@ public class TicketController {
 	private ComboBox<String> departmentCombo;
 	@FXML
 	private TextField ticketIssuerText;
-	
 	@FXML
 	private TextField ticketKeywordText;
+	@FXML
+	private ComboBox<String> statusCombo;
 
 	// Buttons
 	@FXML
@@ -71,6 +72,8 @@ public class TicketController {
 	private TableColumn<Ticket, Integer> ticketUserIdColumn;
 	@FXML
 	private TableColumn<Ticket, String> ticketIssuerColumn;
+	@FXML
+	private TableColumn<Ticket, String> ticketStatusColumn;
 
 	// Search an ticket
 	@FXML
@@ -98,7 +101,7 @@ public class TicketController {
 			if (user.getRole().equals("admin")) {
 				ticketData = TicketDAO.searchTickets(keyword);
 			} else {
-				ticketData = TicketDAO.searchTickets(keyword,user.getUserId());
+				ticketData = TicketDAO.searchTickets(keyword, user.getUserId());
 			}
 			// Fill Tickets on TableView
 			fillTickets(ticketData);
@@ -116,21 +119,31 @@ public class TicketController {
 
 	// Initializing controller class.
 	public void init(final Login login, User user) {
-		
+
 		this.user = user;
-		
+
 		ticketIdColumn.setCellValueFactory(cellData -> cellData.getValue().ticketIdProperty().asObject());
 		ticketNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 		ticketDescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().descriptionProperty());
 		ticketDepartmentColumn.setCellValueFactory(cellData -> cellData.getValue().departmentProperty());
 		ticketUserIdColumn.setCellValueFactory(cellData -> cellData.getValue().userIdProperty().asObject());
 		ticketIssuerColumn.setCellValueFactory(cellData -> cellData.getValue().issuerProperty());
+		ticketStatusColumn.setCellValueFactory(cellData -> cellData.getValue().issuerProperty());
+//		ticketCreatedAtColumn.setCellValueFactory(cellData -> cellData.getValue().issuerProperty());
+//		ticketUpdatedAtColumn.setCellValueFactory(cellData -> cellData.getValue().issuerProperty());
 
-		// fill user department combo box with item choices.
-		ObservableList<String> userDepartments = FXCollections.observableArrayList();
-		userDepartments.add("Production");
-		userDepartments.add("IT");
-		departmentCombo.setItems(userDepartments);
+		// fill department combo box with item choices.
+		ObservableList<String> departments = FXCollections.observableArrayList();
+		departments.add("Production");
+		departments.add("IT");
+		departmentCombo.setItems(departments);
+
+		// fill status combo box with item choices.
+		ObservableList<String> statuses = FXCollections.observableArrayList();
+		statuses.add("Open");
+		statuses.add("Processing");
+		statuses.add("Closed");
+		statusCombo.setItems(statuses);
 
 		// Add action on table selection
 		ticketTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -182,7 +195,7 @@ public class TicketController {
 		try {
 			TicketDAO.updateTicket(ticketIdText.getText(), ticketNameText.getText(),
 					ticketDescriptionTextArea.getText(), departmentCombo.getValue(), ticketIssuerText.getText(),
-					user.getUserId());
+					user.getUserId(), statusCombo.getValue().toString());
 
 			searchTicketsBtn.fire();
 
@@ -197,7 +210,8 @@ public class TicketController {
 	private void insertTicket(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
 		try {
 			TicketDAO.insertTicket(ticketNameText.getText(), ticketDescriptionTextArea.getText(),
-					departmentCombo.getValue().toString(), ticketIssuerText.getText(),user.getUserId());
+					departmentCombo.getValue().toString(), ticketIssuerText.getText(), user.getUserId(),
+					statusCombo.getValue().toString());
 			System.out.println("Ticket inserted! \n");
 		} catch (SQLException e) {
 			System.out.println("Problem occurred while inserting ticket " + e);

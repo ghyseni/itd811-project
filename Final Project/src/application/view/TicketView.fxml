@@ -20,14 +20,16 @@
             <TextArea fx:id="ticketDescriptionTextArea" prefHeight="25.0" prefWidth="79.0" promptText="Description" />            
 		    <ComboBox fx:id="departmentCombo" prefHeight="25.0" prefWidth="79.0" promptText="Department"/>
             <TextField fx:id="ticketIssuerText" prefHeight="25.0" prefWidth="79.0" promptText="Issuer" />
+            <ComboBox fx:id="statusCombo" prefHeight="25.0" prefWidth="79.0" promptText="Status"/>
          </children>
       </VBox>
       <VBox layoutX="9.0" layoutY="28.0" prefWidth="67.0" spacing="12.0">
          <children>
             <Label text="Ticketname" />
             <Label text="Description" />
-            <Label layoutY="80" text="Department" />
-            <Label text="Issuer" />
+            <Label text="Department" />
+            <Label text="Issuer" /> 
+            <Label text="Status" />      
          </children>
       </VBox>
       <Separator layoutY="14.0" prefHeight="4.0" prefWidth="600.0" />
@@ -40,6 +42,9 @@
            <TableColumn fx:id="ticketDepartmentColumn" prefWidth="73.0" text="Department" />
             <TableColumn fx:id="ticketIssuerColumn" prefWidth="73.0" text="Issuer" />
              <TableColumn fx:id="ticketUserIdColumn" prefWidth="73.0" text="User Id" />
+             <TableColumn fx:id="ticketStatusColumn" prefWidth="73.0" text="Status" />
+              <TableColumn fx:id="ticketCreatedAtColumn" prefWidth="73.0" text="Created at" />
+               <TableColumn fx:id="ticketUpdatedAtColumn" prefWidth="73.0" text="Updated at" />
         </columns>
       </TableView>
       <Button fx:id="searchTicketsBtn" layoutX="396.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchTickets" prefHeight="25.0" prefWidth="139.0" text="Search All Tickets" />

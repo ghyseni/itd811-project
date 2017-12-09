@@ -47,6 +47,7 @@ public class TicketDAO {
 			ticket.setDepartment(rs.getString("department"));
 			ticket.setIssuer(rs.getString("issuer"));
 			ticket.setUserId(rs.getInt("user_id"));
+			ticket.setIssuer(rs.getString("status"));
 		}
 		return ticket;
 	}
@@ -61,7 +62,7 @@ public class TicketDAO {
 			selectStmt = "SELECT * FROM tickets";
 		} else {
 			selectStmt = "SELECT * FROM tickets where name LIKE '%" + keyword + "%' OR description LIKE '%" + keyword
-					+ "%'";
+					+ "%' OR status LIKE '%" + keyword + "%'";
 		}
 
 		// Execute SELECT statement
@@ -92,7 +93,7 @@ public class TicketDAO {
 			selectStmt = "SELECT * FROM tickets where user_id=" + userId;
 		} else {
 			selectStmt = "SELECT * FROM tickets where name LIKE '%" + keyword + "%' OR description LIKE '%" + keyword
-					+ "%' AND user_id=" + userId;
+					+ "%' OR status LIKE '%" + keyword + "% AND user_id=" + userId;
 		}
 
 		// Execute SELECT statement
@@ -125,6 +126,7 @@ public class TicketDAO {
 			ticket.setDepartment(rs.getString("department"));
 			ticket.setUserId(rs.getInt("user_id"));
 			ticket.setIssuer(rs.getString("issuer"));
+			ticket.setIssuer(rs.getString("status"));
 			// Add ticket to the ObservableList
 			userList.add(ticket);
 		}
@@ -136,11 +138,12 @@ public class TicketDAO {
 	// UPDATE a ticket name
 	// *************************************
 	public static void updateTicket(String ticketId, String ticketName, String ticketDescription,
-			String ticketDepartment, String issuer, int userId) throws SQLException, ClassNotFoundException {
+			String ticketDepartment, String issuer, int userId, String status)
+			throws SQLException, ClassNotFoundException {
 		// Declare a UPDATE statement
 		String updateStmt = "UPDATE tickets SET name = '" + ticketName + "', description = '" + ticketDescription
-				+ "', department = '" + ticketDepartment + "', issuer = " + issuer + ", user_id = " + userId
-				+ " WHERE ticket_id = " + ticketId;
+				+ "', department = '" + ticketDepartment + "', issuer = '" + issuer + "', user_id = " + userId
+				+ ", status='" + status + "' WHERE ticket_id = " + ticketId;
 
 		// Execute UPDATE operation
 		try {
@@ -188,11 +191,12 @@ public class TicketDAO {
 	// *************************************
 	// INSERT a ticket
 	// *************************************
-	public static void insertTicket(String name, String description, String department, String issuer, int userId)
-			throws SQLException, ClassNotFoundException {
+	public static void insertTicket(String name, String description, String department, String issuer, int userId,
+			String status) throws SQLException, ClassNotFoundException {
 		// Declare a DELETE statement
-		String updateStmt = "INSERT INTO tickets " + "(name, description, department, issuer, user_id) " + "VALUES "
-				+ "('" + name + "','" + description + "','" + department + "'," + issuer + "," + userId + ")";
+		String updateStmt = "INSERT INTO tickets " + "(name, description, department, issuer, user_id, status) "
+				+ "VALUES " + "('" + name + "','" + description + "','" + department + "','" + issuer + "'," + userId
+				+ ",'" + status + "')";
 		System.out.println(updateStmt);
 		// Execute DELETE operation
 		try {
